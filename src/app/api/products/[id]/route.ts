@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -28,8 +28,8 @@ async function ensureAdmin() {
 }
 
 export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const isAdmin = await ensureAdmin();
   if (!isAdmin) {
@@ -37,10 +37,11 @@ export async function PUT(
   }
 
   try {
+    const { id } = await params;
     const body = await request.json();
     const data = updateSchema.parse(body);
     const updated = await prisma.product.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...data,
         galleryJson:
@@ -59,15 +60,16 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const isAdmin = await ensureAdmin();
   if (!isAdmin) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
   try {
-    await prisma.product.delete({ where: { id: params.id } });
+    const { id } = await params;
+    await prisma.product.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (error) {
     return NextResponse.json(

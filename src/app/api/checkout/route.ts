@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   }
 
   const origin = request.headers.get("origin") ?? "http://localhost:3000";
-  const stripe = new Stripe(stripeKey, { apiVersion: "2024-10-28.acacia" });
+  const stripe = new Stripe(stripeKey, { apiVersion: "2026-03-25.dahlia" });
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",

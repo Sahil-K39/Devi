@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -9,8 +9,8 @@ const schema = z.object({
 });
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
@@ -18,10 +18,11 @@ export async function PATCH(
   }
 
   try {
+    const { id } = await params;
     const body = await request.json();
     const input = schema.parse(body);
     const updated = await prisma.contactMessage.update({
-      where: { id: params.id },
+      where: { id },
       data: { status: input.status },
     });
     return NextResponse.json(updated);
