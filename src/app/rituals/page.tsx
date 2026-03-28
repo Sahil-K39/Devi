@@ -14,9 +14,8 @@ export default function RitualsPage() {
           </p>
           <h1 className="text-4xl font-semibold">Movement, devotion, daily wear.</h1>
           <p className="max-w-2xl text-muted">
-            Inspired by geleshop’s clean product flow but grounded in Devi’s sacred
-            steps—each look is built to move from ceremony to street without losing
-            grace.
+            Built to move from ceremony to street—grounded in Devi’s sacred steps
+            and meant to feel fluid, secure, and alive.
           </p>
         </div>
 

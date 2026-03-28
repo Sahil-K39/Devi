@@ -62,6 +62,7 @@ export async function getProducts(options: { includeInactive?: boolean } = {}) {
 }
 
 export async function getProductBySlug(slug: string) {
+  if (!slug) return null;
   const product = await prisma.product.findUnique({ where: { slug } });
   return product ? mapProduct(product) : null;
 }
