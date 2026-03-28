@@ -1,0 +1,56 @@
+import type { NextAuthOptions, Session } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+
+const adminEmail = process.env.ADMIN_EMAIL ?? "admin@devidivine.com";
+const adminPassword = process.env.ADMIN_PASSWORD ?? "changeme123";
+const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+
+async function verifyPassword(password: string) {
+  if (adminPasswordHash) {
+    return bcrypt.compare(password, adminPasswordHash);
+  }
+  return password === adminPassword;
+}
+
+export const authOptions: NextAuthOptions = {
+  session: { strategy: "jwt" },
+  pages: { signIn: "/admin/login" },
+  providers: [
+    CredentialsProvider({
+      name: "Admin",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) return null;
+        const isEmailMatch =
+          credentials.email.toLowerCase() === adminEmail.toLowerCase();
+        const isPasswordValid = await verifyPassword(credentials.password);
+
+        if (!isEmailMatch || !isPasswordValid) return null;
+
+        return { id: "admin", email: adminEmail, role: "admin" };
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = "admin";
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token?.role) {
+        session.user = {
+          ...session.user,
+          role: token.role as string,
+          email: token.email ?? adminEmail,
+        } as Session["user"];
+      }
+      return session;
+    },
+  },
+};

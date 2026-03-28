@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  tagline     String?
+  description String
+  priceCents  Int
+  badge       String?
+  heroImage   String
+  galleryJson String   @default("[]")
+  tagsJson    String   @default("[]")
+  featured    Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String         @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  status    String        @default("NEW")
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}

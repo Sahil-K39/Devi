@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f3ec;
+  --ink: #0d0d10;
+  --muted: #6c6860;
+  --accent: #0f1118;
+  --accent-soft: #e8e1d6;
+  --glow: radial-gradient(900px 900px at 20% 15%, rgba(255, 215, 182, 0.45), transparent),
+    radial-gradient(800px 800px at 80% 30%, rgba(151, 189, 255, 0.35), transparent),
+    radial-gradient(700px 700px at 50% 90%, rgba(255, 255, 255, 0.5), transparent);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-base: var(--bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-soft: var(--accent-soft);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), "Space Grotesk", system-ui, -apple-system,
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--glow);
+  opacity: 0.7;
+  pointer-events: none;
+  filter: blur(60px);
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: #0f1118;
+  color: #fdfbf5;
+}
+
+/* Buttons — consistent, high-contrast */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  padding: 0.9rem 1.5rem;
+  transition: transform 150ms ease, box-shadow 200ms ease, background 150ms ease,
+    color 150ms ease, border-color 150ms ease;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+.btn:focus-visible {
+  outline: 2px solid #0f1118;
+  outline-offset: 2px;
+}
+.btn-primary {
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.25);
+}
+.btn-light {
+  background: #fff;
+  color: var(--ink);
+  border-color: #0d0d10;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+.btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+}
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: #fff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
