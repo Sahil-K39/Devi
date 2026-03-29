@@ -23,12 +23,14 @@ export function CheckoutButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productSlug, quantity }),
       });
+      const body = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const body = await res.json();
         throw new Error(body?.message || "Unable to start checkout");
       }
-      const { url } = await res.json();
-      window.location.href = url;
+      if (typeof body?.url !== "string" || !/^https?:\/\//.test(body.url)) {
+        throw new Error(body?.message || "Checkout link is unavailable right now");
+      }
+      window.location.assign(body.url);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
