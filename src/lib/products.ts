@@ -1,9 +1,4 @@
-import {
-  type ProductRecord,
-  getActiveProducts,
-  getAllProducts,
-  getProductBySlugRecord,
-} from "@/lib/content-store";
+import { defaultProducts } from "@/lib/default-products";
 import { money } from "@/lib/money";
 
 export type ProductDTO = {
@@ -26,42 +21,78 @@ export type ProductDTO = {
 export const stringifyList = (value: string[] | undefined | null) =>
   JSON.stringify(value ?? []);
 
-const mapProduct = (product: ProductRecord): ProductDTO => ({
-  id: product.id,
-  name: product.name,
-  slug: product.slug,
-  tagline: product.tagline,
-  description: product.description,
-  priceCents: product.priceCents,
-  badge: product.badge,
-  heroImage: product.heroImage,
-  gallery: product.gallery,
-  tags: product.tags,
-  featured: product.featured,
-  active: product.active,
-  createdAt: product.createdAt,
-  updatedAt: product.updatedAt,
-});
+const fallbackProducts: ProductDTO[] = defaultProducts.map((product) => ({
+  ...product,
+}));
+
+const sortProducts = (products: ProductDTO[]) =>
+  [...products].sort((left, right) => {
+    if (left.featured !== right.featured) {
+      return left.featured ? -1 : 1;
+    }
+    return right.createdAt.localeCompare(left.createdAt);
+  });
+
+async function loadRuntimeProducts() {
+  try {
+    const store = await import("@/lib/content-store");
+    return {
+      getAllProducts: store.getAllProducts,
+      getActiveProducts: store.getActiveProducts,
+      getProductBySlugRecord: store.getProductBySlugRecord,
+    };
+  } catch (error) {
+    console.error("Falling back to bundled products", error);
+    return null;
+  }
+}
 
 export async function getProducts(options: { includeInactive?: boolean } = {}) {
-  const products = options.includeInactive
-    ? await getAllProducts()
-    : await getActiveProducts();
+  const runtime = await loadRuntimeProducts();
 
-  return products.map(mapProduct);
+  if (!runtime) {
+    return options.includeInactive
+      ? fallbackProducts
+      : fallbackProducts.filter((product) => product.active);
+  }
+
+  try {
+    const products = options.includeInactive
+      ? await runtime.getAllProducts()
+      : await runtime.getActiveProducts();
+
+    return products.map((product) => ({ ...product }));
+  } catch (error) {
+    console.error("Product read failed, using bundled fallback", error);
+    return options.includeInactive
+      ? fallbackProducts
+      : fallbackProducts.filter((product) => product.active);
+  }
 }
 
 export async function getProductBySlug(slug: string) {
   if (!slug) return null;
-  const product = await getProductBySlugRecord(slug);
-  if (!product || !product.active) return null;
-  return mapProduct(product);
+
+  const runtime = await loadRuntimeProducts();
+  if (runtime) {
+    try {
+      const product = await runtime.getProductBySlugRecord(slug);
+      if (product?.active) {
+        return { ...product };
+      }
+    } catch (error) {
+      console.error("Product detail read failed, using bundled fallback", error);
+    }
+  }
+
+  const fallback = fallbackProducts.find((product) => product.slug === slug) ?? null;
+  return fallback?.active ? fallback : null;
 }
 
 export async function getFeaturedProduct() {
-  const products = await getActiveProducts();
-  const product = products.find((item) => item.featured) ?? products[0] ?? null;
-  return product ? mapProduct(product) : null;
+  const products = await getProducts();
+  const featured = sortProducts(products).find((product) => product.featured);
+  return featured ?? products[0] ?? null;
 }
 
 export { money };
