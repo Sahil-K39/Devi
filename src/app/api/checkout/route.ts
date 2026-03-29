@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProductBySlug } from "@/lib/products";
 
@@ -9,7 +9,7 @@ export async function GET() {
   return NextResponse.json({ status: "ok" });
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
     return NextResponse.json(
@@ -34,8 +34,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Product not found" }, { status: 404 });
   }
 
-  const origin = request.headers.get("origin") ?? "http://localhost:3000";
+  const origin = request.nextUrl.origin;
   const stripe = new Stripe(stripeKey, { apiVersion: "2026-03-25.dahlia" });
+  const imageUrls = (product.gallery.length ? product.gallery : [product.heroImage]).map(
+    (image) => (image.startsWith("http") ? image : `${origin}${image}`)
+  );
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
           product_data: {
             name: product.name,
             description: product.tagline ?? product.description.slice(0, 120),
-            images: product.gallery.length ? product.gallery : [product.heroImage],
+            images: imageUrls,
           },
           unit_amount: product.priceCents,
         },

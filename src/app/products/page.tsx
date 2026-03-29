@@ -19,8 +19,8 @@ export default async function ProductsPage() {
           </p>
           <h1 className="text-4xl font-semibold">All rituals</h1>
           <p className="max-w-2xl text-muted">
-            Swipe into any product to open the detail page and check out in one
-            smooth flow.
+            Open any piece to see the full story, gallery, and checkout flow in
+            one calm pass.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">

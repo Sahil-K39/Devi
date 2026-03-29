@@ -5,7 +5,7 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
   title: "Devi Divine — Rituals that feel like silk",
   description:
-    "Flagship experience for Devi Divine: elevated rituals, smooth scrolling, and a luxe checkout.",
+    "Devi Divine is a ritual-wear storefront shaped around movement, texture, and a calm buying experience.",
 };
 
 export default function RootLayout({

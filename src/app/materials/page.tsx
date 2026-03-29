@@ -30,8 +30,9 @@ export default function MaterialsPage() {
           <p className="text-sm uppercase tracking-[0.25em] text-muted">Materials</p>
           <h1 className="text-4xl font-semibold">What you feel on skin.</h1>
           <p className="max-w-2xl text-muted">
-            Taking cues from geleshop’s crisp product blocks, we keep it minimal: rich photos,
-            honest fibers, no clutter. Everything stays legible against high-contrast backgrounds.
+            Honest fibers, visible texture, and finishing that holds up in
+            movement. We keep the page quiet so the materials can speak for
+            themselves.
           </p>
         </div>
 

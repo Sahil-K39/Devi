@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { createMessage, getMessages } from "@/lib/content-store";
 import { z } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -16,13 +16,11 @@ export async function POST(request: Request) {
     const body = await request.json();
     const input = schema.parse(body);
 
-    const saved = await prisma.contactMessage.create({
-      data: {
-        name: input.name,
-        email: input.email,
-        phone: input.phone,
-        message: input.message,
-      },
+    const saved = await createMessage({
+      name: input.name,
+      email: input.email,
+      phone: input.phone ?? null,
+      message: input.message,
     });
 
     return NextResponse.json({ ok: true, id: saved.id });
@@ -40,8 +38,6 @@ export async function GET() {
   if (!session?.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-  const messages = await prisma.contactMessage.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const messages = await getMessages();
   return NextResponse.json(messages);
 }

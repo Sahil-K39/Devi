@@ -14,17 +14,21 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       lerp: 0.1,
     });
 
+    let frame = 0;
     const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frame = requestAnimationFrame(raf);
     };
 
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    frame = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+    };
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, left: 0 });
   }, [pathname]);
 
   return <>{children}</>;

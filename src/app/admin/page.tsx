@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getAllProducts, getMessages } from "@/lib/content-store";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -12,10 +12,9 @@ export default async function AdminHome() {
     redirect("/admin/login?callbackUrl=/admin");
   }
 
-  const [productCount, messageCount] = await Promise.all([
-    prisma.product.count(),
-    prisma.contactMessage.count(),
-  ]);
+  const [products, messages] = await Promise.all([getAllProducts(), getMessages()]);
+  const productCount = products.length;
+  const messageCount = messages.length;
 
   return (
     <main className="min-h-screen bg-base text-ink">
@@ -24,7 +23,7 @@ export default async function AdminHome() {
           <p className="text-xs uppercase tracking-[0.25em] text-muted">
             Admin
           </p>
-          <h1 className="text-2xl font-semibold">Command room</h1>
+          <h1 className="text-2xl font-semibold">Studio desk</h1>
         </div>
         <Link
           href="/"
@@ -37,18 +36,18 @@ export default async function AdminHome() {
         <div className="grid gap-4 md:grid-cols-3">
           <StatCard label="Products" value={productCount} href="/admin/products" />
           <StatCard label="Messages" value={messageCount} href="/admin/messages" />
-          <StatCard label="Payments" value="Stripe-ready" href="/checkout/success" />
+          <StatCard label="Orders" value="Checkout live" href="/checkout/success" />
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           <ActionCard
             title="Products"
-            body="Create, update, or hide products. All changes sync instantly."
+            body="Create, update, or hide products from the collection."
             href="/admin/products"
             cta="Manage products"
           />
           <ActionCard
             title="Messages"
-            body="Review contact submissions in real time."
+            body="Review new inquiries and keep the inbox organized."
             href="/admin/messages"
             cta="Open inbox"
           />

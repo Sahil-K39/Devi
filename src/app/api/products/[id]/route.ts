@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { stringifyList } from "@/lib/products";
+import { deleteProduct, updateProduct } from "@/lib/content-store";
 import { z } from "zod";
+
+const assetPathSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (value) => value.startsWith("/") || /^https?:\/\//.test(value),
+    "Use a root-relative path or an absolute URL"
+  );
 
 const updateSchema = z.object({
   name: z.string().optional(),
@@ -12,8 +19,8 @@ const updateSchema = z.object({
   description: z.string().optional(),
   priceCents: z.number().int().positive().optional(),
   badge: z.string().optional(),
-  heroImage: z.string().url().optional(),
-  gallery: z.array(z.string().url()).optional(),
+  heroImage: assetPathSchema.optional(),
+  gallery: z.array(assetPathSchema).optional(),
   tags: z.array(z.string()).optional(),
   featured: z.boolean().optional(),
   active: z.boolean().optional(),
@@ -40,15 +47,14 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
     const data = updateSchema.parse(body);
-    const updated = await prisma.product.update({
-      where: { id },
-      data: {
-        ...data,
-        galleryJson:
-          data.gallery !== undefined ? stringifyList(data.gallery) : undefined,
-        tagsJson: data.tags !== undefined ? stringifyList(data.tags) : undefined,
-      },
+    const updated = await updateProduct(id, {
+      ...data,
+      tagline: data.tagline ?? undefined,
+      badge: data.badge ?? undefined,
     });
+    if (!updated) {
+      return NextResponse.json({ message: "Product not found" }, { status: 404 });
+    }
     return NextResponse.json(updated);
   } catch (error) {
     console.error(error);
@@ -69,7 +75,10 @@ export async function DELETE(
   }
   try {
     const { id } = await params;
-    await prisma.product.delete({ where: { id } });
+    const deleted = await deleteProduct(id);
+    if (!deleted) {
+      return NextResponse.json({ message: "Product not found" }, { status: 404 });
+    }
     return NextResponse.json({ ok: true });
   } catch (error) {
     return NextResponse.json(

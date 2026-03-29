@@ -1,6 +1,6 @@
 "use client";
 
-import { money } from "@/lib/products";
+import { money } from "@/lib/money";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";

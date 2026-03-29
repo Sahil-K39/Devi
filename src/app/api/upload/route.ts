@@ -1,11 +1,23 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-import crypto from "crypto";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { saveUploadedImage } from "@/lib/content-store";
 
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+]);
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const form = await request.formData();
   const file = form.get("file");
 
@@ -17,18 +29,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "File too large (max 10MB)" }, { status: 400 });
   }
 
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
+  if (!ALLOWED_TYPES.has(file.type)) {
+    return NextResponse.json(
+      { message: "Only JPG, PNG, WEBP, AVIF, and GIF images are allowed" },
+      { status: 400 }
+    );
+  }
 
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  await fs.mkdir(uploadsDir, { recursive: true });
-
-  const ext = path.extname(file.name) || ".jpg";
-  const name = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
-  const filepath = path.join(uploadsDir, name);
-
-  await fs.writeFile(filepath, buffer);
-
-  const url = `/uploads/${name}`;
+  const url = await saveUploadedImage(file);
   return NextResponse.json({ url });
 }

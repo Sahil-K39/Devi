@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getMessages } from "@/lib/content-store";
 import { MessageList } from "@/components/admin/MessageList";
 
 export const dynamic = "force-dynamic";
@@ -12,9 +12,7 @@ export default async function AdminMessagesPage() {
     redirect("/admin/login?callbackUrl=/admin/messages");
   }
 
-  const messages = await prisma.contactMessage.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const messages = await getMessages();
 
   return (
     <main className="min-h-screen bg-base text-ink">

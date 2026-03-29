@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { updateMessageStatus } from "@/lib/content-store";
 import { z } from "zod";
 
 const schema = z.object({
@@ -21,10 +21,10 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
     const input = schema.parse(body);
-    const updated = await prisma.contactMessage.update({
-      where: { id },
-      data: { status: input.status },
-    });
+    const updated = await updateMessageStatus(id, input.status);
+    if (!updated) {
+      return NextResponse.json({ message: "Message not found" }, { status: 404 });
+    }
     return NextResponse.json(updated);
   } catch (error) {
     return NextResponse.json(

@@ -7,13 +7,14 @@ import { CheckoutButton } from "@/components/CheckoutButton";
 import { getProductBySlug, money } from "@/lib/products";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default async function ProductDetail({ params }: Props) {
-  const product = await getProductBySlug(params.slug);
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
   if (!product) return notFound();
 
   return (

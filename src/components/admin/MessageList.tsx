@@ -1,13 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import type { ContactMessage } from "@prisma/client";
+import type { MessageRecord } from "@/lib/content-store";
 
-export function MessageList({ initial }: { initial: ContactMessage[] }) {
-  const [messages, setMessages] = useState<ContactMessage[]>(initial);
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+
+export function MessageList({ initial }: { initial: MessageRecord[] }) {
+  const [messages, setMessages] = useState<MessageRecord[]>(initial);
   const [status, setStatus] = useState<string | null>(null);
 
-  const updateStatus = async (id: string, newStatus: ContactMessage["status"]) => {
+  const updateStatus = async (id: string, newStatus: MessageRecord["status"]) => {
     setStatus("Updating…");
     const res = await fetch(`/api/messages/${id}`, {
       method: "PATCH",
@@ -39,7 +47,7 @@ export function MessageList({ initial }: { initial: ContactMessage[] }) {
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
               <span className="rounded-full bg-black/5 px-3 py-1">
-                {new Date(msg.createdAt).toLocaleDateString()}
+                {formatDate(msg.createdAt)}
               </span>
               <span className="rounded-full bg-black/5 px-3 py-1">{msg.status}</span>
               <button

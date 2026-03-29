@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { getFeaturedProduct, getProducts, money } from "@/lib/products";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [featured, products] = await Promise.all([
     getFeaturedProduct(),
@@ -36,9 +38,9 @@ export default async function Home() {
               Wearable devotion. Textures that feel like home.
             </h1>
             <p className="text-lg text-white/80">
-              Shot on sacred steps in México, crafted for movement and ceremony.
-              Every look is ready to purchase with one smooth scroll and a
-              single click checkout.
+              Shot on sacred steps in Mexico and shaped for movement, ritual,
+              and everyday grace. Each piece feels grounded, tactile, and ready
+              to live beyond a single moment.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/products" className="btn btn-light">
@@ -76,14 +78,14 @@ export default async function Home() {
                 Ritual wear that moves with you.
               </h2>
               <p className="text-base text-muted">
-                Breathable layers, hand-drawn prints, and silhouettes that let you
-                dance, pray, and play. No harsh shadows—just soft light and softer
-                fabric.
+                Breathable layers, hand-drawn prints, and silhouettes that let
+                you dance, pray, and play. Soft structure, warm light, and
+                fabrics that stay beautiful in motion.
               </p>
               <ul className="space-y-2 text-sm text-muted">
-                <li>• Editorial photography straight from the shoot.</li>
-                <li>• Copy that stays legible on every background.</li>
-                <li>• Scroll physics tuned to feel cinematic.</li>
+                <li>• Small-batch styling built around real movement.</li>
+                <li>• High-contrast layouts that stay easy to read.</li>
+                <li>• A calmer pace, from browse to checkout.</li>
               </ul>
             </div>
           </div>
@@ -241,11 +243,11 @@ export default async function Home() {
                 Contact & consultations
               </p>
               <h3 className="text-3xl font-semibold">
-                Need a bespoke scent story, lookbook, or wholesale link?
+                Need a custom look, a private fitting, or a special order?
               </h3>
               <p className="text-white/80">
-                There’s a dedicated contact page wired into the admin inbox.
-                Once you send a message, it shows up instantly for the team.
+                Share what you are preparing for and we will answer with the
+                right pieces, timing, and styling notes for your ritual.
               </p>
               <div className="flex gap-3">
                 <Link href="/contact" className="btn btn-light">
@@ -260,12 +262,12 @@ export default async function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
               <div className="relative space-y-3 text-sm text-white/80">
                 <p className="text-base text-white">
-                  Send a note and it reaches us directly. Responses usually go
-                  out within 24 hours.
+                  Send a note and it reaches the studio directly. Replies
+                  usually go out within a day.
                 </p>
                 <p className="text-base text-white">
-                  For custom rituals, include your measurements and preferred
-                  colors—we&apos;ll tailor a look sheet for you.
+                  For custom pieces, include measurements, preferred colors,
+                  and the feeling you want the look to carry.
                 </p>
               </div>
             </div>

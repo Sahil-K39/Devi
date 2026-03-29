@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Product } from "@prisma/client";
+import type { ProductRecord } from "@/lib/content-store";
 
 const emptyForm = {
   name: "",
@@ -19,8 +19,16 @@ const emptyForm = {
 
 type FormState = typeof emptyForm;
 
-export function ProductManager({ initial }: { initial: Product[] }) {
-  const [products, setProducts] = useState<Product[]>(initial);
+const sortProducts = (items: ProductRecord[]) =>
+  [...items].sort((left, right) => {
+    if (left.featured !== right.featured) {
+      return left.featured ? -1 : 1;
+    }
+    return right.createdAt.localeCompare(left.createdAt);
+  });
+
+export function ProductManager({ initial }: { initial: ProductRecord[] }) {
+  const [products, setProducts] = useState<ProductRecord[]>(initial);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -29,18 +37,10 @@ export function ProductManager({ initial }: { initial: Product[] }) {
   const resetForm = () => {
     setForm(emptyForm);
     setEditingId(null);
+    setUploadStatus(null);
   };
 
-  const parseList = (raw?: string | null) => {
-    try {
-      const arr = raw ? (JSON.parse(raw) as string[]) : [];
-      return arr.join(", ");
-    } catch {
-      return "";
-    }
-  };
-
-  const handleEdit = (product: Product) => {
+  const handleEdit = (product: ProductRecord) => {
     setEditingId(product.id);
     setForm({
       name: product.name,
@@ -50,8 +50,8 @@ export function ProductManager({ initial }: { initial: Product[] }) {
       priceCents: product.priceCents,
       badge: product.badge ?? "",
       heroImage: product.heroImage,
-      gallery: parseList(product.galleryJson),
-      tags: parseList(product.tagsJson),
+      gallery: product.gallery.join(", "),
+      tags: product.tags.join(", "),
       featured: product.featured,
       active: product.active,
     });
@@ -86,12 +86,30 @@ export function ProductManager({ initial }: { initial: Product[] }) {
     const updated = await res.json();
     if (editingId) {
       setProducts((prev) =>
-        prev.map((p) => (p.id === editingId ? updated : p))
+        sortProducts(prev.map((p) => (p.id === editingId ? updated : p)))
       );
     } else {
-      setProducts((prev) => [updated, ...prev]);
+      setProducts((prev) => sortProducts([updated, ...prev]));
     }
     setStatus("Saved");
+    resetForm();
+  };
+
+  const handleDelete = async () => {
+    if (!editingId) return;
+    setStatus("Removing product…");
+    const res = await fetch(`/api/products/${editingId}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      setStatus(`Error: ${body?.message ?? "Unable to delete"}`);
+      return;
+    }
+
+    setProducts((prev) => prev.filter((product) => product.id !== editingId));
+    setStatus("Removed");
     resetForm();
   };
 
@@ -180,7 +198,7 @@ export function ProductManager({ initial }: { initial: Product[] }) {
           onChange={(value) => setForm((f) => ({ ...f, heroImage: value }))}
         />
         <label className="flex flex-col gap-2 text-sm text-muted">
-          Upload hero image (stores under /uploads)
+          Upload hero image
           <input
             type="file"
             accept="image/*"
@@ -227,6 +245,15 @@ export function ProductManager({ initial }: { initial: Product[] }) {
         >
           {editingId ? "Update product" : "Create product"}
         </button>
+        {editingId && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="w-full rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-semibold text-red-700 transition hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.08)]"
+          >
+            Delete product
+          </button>
+        )}
         {status && <p className="text-sm text-muted">{status}</p>}
       </form>
 

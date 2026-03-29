@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getAllProducts } from "@/lib/content-store";
 import { ProductManager } from "@/components/admin/ProductManager";
 
 export const dynamic = "force-dynamic";
@@ -12,9 +12,7 @@ export default async function AdminProductsPage() {
     redirect("/admin/login?callbackUrl=/admin/products");
   }
 
-  const products = await prisma.product.findMany({
-    orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
-  });
+  const products = await getAllProducts();
 
   return (
     <main className="min-h-screen bg-base text-ink">

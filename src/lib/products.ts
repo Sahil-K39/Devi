@@ -1,5 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import type { Product } from "@prisma/client";
+import {
+  type ProductRecord,
+  getActiveProducts,
+  getAllProducts,
+  getProductBySlugRecord,
+} from "@/lib/content-store";
+import { money } from "@/lib/money";
 
 export type ProductDTO = {
   id: string;
@@ -14,63 +19,49 @@ export type ProductDTO = {
   tags: string[];
   featured: boolean;
   active: boolean;
-};
-
-const parseList = (value: string | null) => {
-  try {
-    return value ? (JSON.parse(value) as string[]) : [];
-  } catch (error) {
-    console.error("Failed to parse list", error);
-    return [];
-  }
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const stringifyList = (value: string[] | undefined | null) =>
   JSON.stringify(value ?? []);
 
-export const money = (cents: number, currency = "USD") =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 2,
-  }).format(cents / 100);
-
-const mapProduct = (p: Product): ProductDTO => ({
-  id: p.id,
-  name: p.name,
-  slug: p.slug,
-  tagline: p.tagline,
-  description: p.description,
-  priceCents: p.priceCents,
-  badge: p.badge,
-  heroImage: p.heroImage,
-  gallery: parseList(p.galleryJson),
-  tags: parseList(p.tagsJson),
-  featured: p.featured,
-  active: p.active,
+const mapProduct = (product: ProductRecord): ProductDTO => ({
+  id: product.id,
+  name: product.name,
+  slug: product.slug,
+  tagline: product.tagline,
+  description: product.description,
+  priceCents: product.priceCents,
+  badge: product.badge,
+  heroImage: product.heroImage,
+  gallery: product.gallery,
+  tags: product.tags,
+  featured: product.featured,
+  active: product.active,
+  createdAt: product.createdAt,
+  updatedAt: product.updatedAt,
 });
 
 export async function getProducts(options: { includeInactive?: boolean } = {}) {
-  const products = await prisma.product.findMany({
-    where: options.includeInactive ? {} : { active: true },
-    orderBy: [
-      { featured: "desc" },
-      { createdAt: "desc" },
-    ],
-  });
+  const products = options.includeInactive
+    ? await getAllProducts()
+    : await getActiveProducts();
+
   return products.map(mapProduct);
 }
 
 export async function getProductBySlug(slug: string) {
   if (!slug) return null;
-  const product = await prisma.product.findUnique({ where: { slug } });
-  return product ? mapProduct(product) : null;
+  const product = await getProductBySlugRecord(slug);
+  if (!product || !product.active) return null;
+  return mapProduct(product);
 }
 
 export async function getFeaturedProduct() {
-  const product = await prisma.product.findFirst({
-    where: { active: true },
-    orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
-  });
+  const products = await getActiveProducts();
+  const product = products.find((item) => item.featured) ?? products[0] ?? null;
   return product ? mapProduct(product) : null;
 }
+
+export { money };
