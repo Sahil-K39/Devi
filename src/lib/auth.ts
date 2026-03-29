@@ -14,6 +14,7 @@ async function verifyPassword(password: string) {
 }
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET ?? "devi-divine-default-secret-change-me",
   session: { strategy: "jwt" },
   pages: { signIn: "/admin/login" },
   providers: [

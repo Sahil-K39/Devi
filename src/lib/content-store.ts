@@ -96,11 +96,34 @@ const defaultProducts: ProductRecord[] = [
 
 const defaultMessages: MessageRecord[] = [];
 
-const isNetlifyRuntime = () =>
-  Boolean(process.env.NETLIFY || process.env.CONTEXT || process.env.BLOBS_CONTEXT);
+const isNetlifyRuntime = () => Boolean(process.env.NETLIFY || process.env.BLOBS_CONTEXT);
 
 const dataStore = () => getStore("devi-data");
 const uploadsStore = () => getStore("devi-uploads");
+
+async function withBlobReadFallback<T>(
+  label: string,
+  run: () => Promise<T>,
+  fallback: () => T
+) {
+  try {
+    return await run();
+  } catch (error) {
+    console.error(`Blob read failed for ${label}`, error);
+    return fallback();
+  }
+}
+
+async function runBlobWrite(label: string, run: () => Promise<void>) {
+  try {
+    await run();
+  } catch (error) {
+    console.error(`Blob write failed for ${label}`, error);
+    throw new Error(
+      "Storage is not ready on Netlify yet. The storefront is still live, but admin changes cannot be saved until storage connects."
+    );
+  }
+}
 
 const isProductRecord = (value: unknown): value is ProductRecord => {
   if (!value || typeof value !== "object") return false;
@@ -206,37 +229,59 @@ async function saveMessagesToLocal(messages: MessageRecord[]) {
 }
 
 async function getProductsFromBlobs() {
-  const stored = await dataStore().get("products.json", { type: "json" });
-  if (!Array.isArray(stored)) {
-    await dataStore().setJSON("products.json", defaultProducts);
-    return defaultProducts;
-  }
+  return withBlobReadFallback(
+    "products",
+    async () => {
+      const stored = await dataStore().get("products.json", { type: "json" });
+      if (!Array.isArray(stored)) {
+        await runBlobWrite("products seed", async () => {
+          await dataStore().setJSON("products.json", defaultProducts);
+        });
+        return defaultProducts;
+      }
 
-  const normalized = stored.filter(isProductRecord);
-  if (!normalized.length) {
-    await dataStore().setJSON("products.json", defaultProducts);
-    return defaultProducts;
-  }
+      const normalized = stored.filter(isProductRecord);
+      if (!normalized.length) {
+        await runBlobWrite("products reset", async () => {
+          await dataStore().setJSON("products.json", defaultProducts);
+        });
+        return defaultProducts;
+      }
 
-  return normalized;
+      return normalized;
+    },
+    () => defaultProducts
+  );
 }
 
 async function saveProductsToBlobs(products: ProductRecord[]) {
-  await dataStore().setJSON("products.json", products);
+  await runBlobWrite("products", async () => {
+    await dataStore().setJSON("products.json", products);
+  });
 }
 
 async function getMessagesFromBlobs() {
-  const stored = await dataStore().get("messages.json", { type: "json" });
-  if (!Array.isArray(stored)) {
-    await dataStore().setJSON("messages.json", defaultMessages);
-    return defaultMessages;
-  }
+  return withBlobReadFallback(
+    "messages",
+    async () => {
+      const stored = await dataStore().get("messages.json", { type: "json" });
+      if (!Array.isArray(stored)) {
+        await runBlobWrite("messages seed", async () => {
+          await dataStore().setJSON("messages.json", defaultMessages);
+        });
+        return defaultMessages;
+      }
 
-  return stored.filter(isMessageRecord);
+      return stored.filter(isMessageRecord);
+    },
+    () => defaultMessages
+  );
 }
 
 async function saveMessagesToBlobs(messages: MessageRecord[]) {
-  await dataStore().setJSON("messages.json", messages);
+  await runBlobWrite("messages", async () => {
+    await dataStore().setJSON("messages.json", messages);
+  });
 }
 
 export async function getAllProducts() {
@@ -438,8 +483,10 @@ export async function saveUploadedImage(file: File) {
   const arrayBuffer = await file.arrayBuffer();
 
   if (isNetlifyRuntime()) {
-    await uploadsStore().set(key, arrayBuffer, {
-      metadata: { contentType: file.type || "application/octet-stream" },
+    await runBlobWrite("uploads", async () => {
+      await uploadsStore().set(key, arrayBuffer, {
+        metadata: { contentType: file.type || "application/octet-stream" },
+      });
     });
   } else {
     const buffer = Buffer.from(arrayBuffer);
@@ -470,17 +517,23 @@ const localContentType = (key: string) => {
 
 export async function getUploadedImage(key: string) {
   if (isNetlifyRuntime()) {
-    const blob = await uploadsStore().getWithMetadata(key, { type: "blob" });
-    if (!blob) return null;
-    const contentType =
-      typeof blob.metadata.contentType === "string"
-        ? blob.metadata.contentType
-        : "application/octet-stream";
+    return withBlobReadFallback(
+      `upload:${key}`,
+      async () => {
+        const blob = await uploadsStore().getWithMetadata(key, { type: "blob" });
+        if (!blob) return null;
+        const contentType =
+          typeof blob.metadata.contentType === "string"
+            ? blob.metadata.contentType
+            : "application/octet-stream";
 
-    return {
-      body: blob.data,
-      contentType,
-    };
+        return {
+          body: blob.data,
+          contentType,
+        };
+      },
+      () => null
+    );
   }
 
   try {
