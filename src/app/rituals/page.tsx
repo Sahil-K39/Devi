@@ -3,81 +3,80 @@ import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
+const ritualCards = [
+  {
+    title: "Dance on stone",
+    body: "Loose silhouettes that stay generous through movement and grounded through prayer.",
+    image: "/devi/devi-1.jpg",
+  },
+  {
+    title: "Offerings at dawn",
+    body: "Water-friendly fabrics, rope belts, and shapes that dry beautifully after ritual.",
+    image: "/devi/devi-5.jpg",
+  },
+  {
+    title: "Power stance",
+    body: "Wrap silhouettes and anchoring ties that hold you in the body without restriction.",
+    image: "/devi/devi-2.jpg",
+  },
+  {
+    title: "Layered fire",
+    body: "The duster, the dress, the scarf: a dialogue of contrast, warmth, and confidence.",
+    image: "/devi/devi-4.jpg",
+  },
+];
+
 export default function RitualsPage() {
   return (
     <main className="min-h-screen bg-base text-ink">
       <Navbar />
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pb-16 pt-28 md:px-10">
-        <div className="flex flex-col gap-3">
-          <p className="text-sm uppercase tracking-[0.25em] text-muted">
-            Rituals
-          </p>
-          <h1 className="text-4xl font-semibold">Movement, devotion, daily wear.</h1>
-          <p className="max-w-2xl text-muted">
-            Built to move from ceremony to street—grounded in Devi’s sacred steps
-            and meant to feel fluid, secure, and alive.
-          </p>
+      <section className="section-shell pt-36 pb-20">
+        <span className="kicker">The living ritual</span>
+        <h1 className="mt-4 font-display text-5xl italic text-accent md:text-7xl">
+          Movement, devotion, daily wear
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg font-light leading-8 text-muted">
+          These looks are built to move from ceremony to street, to hold grace in
+          action, and to stay present in the body.
+        </p>
+
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
+          {ritualCards.map((card, index) => (
+            <article
+              key={card.title}
+              className={index % 2 === 1 ? "md:translate-y-10" : ""}
+            >
+              <div className="paper-luxe overflow-hidden rounded-[2rem] p-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem]">
+                  <Image src={card.image} alt={card.title} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                </div>
+              </div>
+              <div className="mt-5">
+                <p className="text-xs uppercase tracking-[0.26em] text-accent-soft">
+                  Ritual
+                </p>
+                <h2 className="mt-2 font-display text-3xl italic text-ink">
+                  {card.title}
+                </h2>
+                <p className="mt-3 max-w-md text-base font-light leading-7 text-muted">
+                  {card.body}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <RitualCard
-            title="Dance on stone"
-            body="Loose silhouettes that won’t fight your flow. Stitching reinforced for real movement."
-            image="/devi/devi-1.jpg"
-          />
-          <RitualCard
-            title="Offerings at dawn"
-            body="Water-friendly fabrics and rope belts that dry fast without clinging."
-            image="/devi/devi-5.jpg"
-          />
-          <RitualCard
-            title="Power stance"
-            body="Wrap skirts and braids that stay centered through yoga, prayer, and performance."
-            image="/devi/devi-2.jpg"
-          />
-          <RitualCard
-            title="Layered fire"
-            body="Pair the Jungle Fire duster with river-white underlayers for contrast and confidence."
-            image="/devi/devi-4.jpg"
-          />
-        </div>
-
-        <div className="flex flex-wrap gap-3 text-sm">
+        <div className="mt-14 flex flex-wrap gap-3">
           <Link href="/products" className="btn btn-primary">
             Shop the collection
           </Link>
-          <Link href="/contact" className="btn btn-light">
+          <Link href="/contact" className="btn btn-ghost">
             Book a custom ritual look
           </Link>
         </div>
       </section>
       <Footer />
     </main>
-  );
-}
-
-function RitualCard({
-  title,
-  body,
-  image,
-}: {
-  title: string;
-  body: string;
-  image: string;
-}) {
-  return (
-    <div className="overflow-hidden rounded-3xl border border-black/5 bg-white shadow-[0_22px_60px_rgba(0,0,0,0.08)]">
-      <div className="relative aspect-[4/3]">
-        <Image src={image} alt={title} fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-        <div className="absolute bottom-3 left-3 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-ink">
-          Ritual
-        </div>
-      </div>
-      <div className="space-y-2 p-5">
-        <h3 className="text-lg font-semibold text-ink">{title}</h3>
-        <p className="text-sm text-muted">{body}</p>
-      </div>
-    </div>
   );
 }

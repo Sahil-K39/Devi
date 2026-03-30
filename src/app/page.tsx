@@ -3,277 +3,264 @@ import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { getFeaturedProduct, getProducts, money } from "@/lib/products";
+import { getProducts } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [featured, products] = await Promise.all([
-    getFeaturedProduct(),
-    getProducts(),
-  ]);
-
-  const supporting = products.slice(0, 6);
+  const products = await getProducts();
+  const [heroProduct, secondProduct, thirdProduct] = products;
 
   return (
-    <main className="relative flex min-h-screen flex-col bg-base text-ink">
+    <main className="min-h-screen bg-base text-ink">
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#0b0c10] via-[#13151c] to-[#1f2129] text-white">
-        <Image
-          src="/devi/devi-4.jpg"
-          alt="Devi Divine collection"
-          fill
-          priority
-          className="object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/55 to-transparent" />
-        <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-24 pt-28 md:px-10 md:pb-28 md:pt-32">
-          <div className="max-w-3xl space-y-4">
-            <p className="text-sm uppercase tracking-[0.3em] text-white/70">
-              Devi Divine · New drop · Living rituals
-            </p>
-            <h1 className="text-4xl font-semibold leading-tight md:text-6xl">
-              Wearable devotion. Textures that feel like home.
-            </h1>
-            <p className="text-lg text-white/80">
-              Shot on sacred steps in Mexico and shaped for movement, ritual,
-              and everyday grace. Each piece feels grounded, tactile, and ready
-              to live beyond a single moment.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/products" className="btn btn-light">
-                Shop the collection
-              </Link>
-              <Link href="/rituals" className="btn btn-ghost">
-                See the looks
-              </Link>
+      <section className="relative overflow-hidden px-6 pb-16 pt-28 md:px-10 md:pb-24">
+        <div className="absolute inset-0">
+          <Image
+            src="/devi/devi-4.jpg"
+            alt="Devi Divine hero"
+            fill
+            priority
+            className="object-cover brightness-[0.74] sepia-[0.16]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_22%,rgba(255,244,224,0.78),transparent_22%),linear-gradient(90deg,rgba(26,14,12,0.62),rgba(26,14,12,0.18)_44%,rgba(254,249,235,0.58)),linear-gradient(180deg,rgba(36,29,23,0.16),rgba(254,249,235,0.9))]" />
+        </div>
+
+        <div className="section-shell relative z-10">
+          <div className="grid min-h-[calc(100vh-9rem)] items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="max-w-3xl">
+              <span className="kicker">Pushkar / Devotional wardrobe</span>
+              <h1 className="mt-6 font-display text-6xl leading-[0.9] text-[#2d2018] md:text-[7.2rem]">
+                Wearable devotion,
+                <br />
+                cut for movement
+                <br />
+                and light.
+              </h1>
+              <p className="mt-8 max-w-2xl text-lg font-light leading-9 text-[#5f4d41] md:text-xl">
+                A slow collection of ritual-ready garments shaped on sacred steps in
+                Mexico and finished with warmth, air, and drape in mind. Everything
+                is made to feel graceful in motion and grounded at rest.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link href="/products" className="btn btn-primary">
+                  Shop the collection
+                </Link>
+                <Link href="/contact" className="btn btn-ghost">
+                  Book a private fitting
+                </Link>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <span className="hero-chip">Hand-finished silhouettes</span>
+                <span className="hero-chip">Ceremony to street</span>
+                <span className="hero-chip">Soft structure / no stiffness</span>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-3 text-sm text-white/80">
-            <span className="rounded-full bg-white/10 px-3 py-2">
-              Hand-finished seams
-            </span>
-            <span className="rounded-full bg-white/10 px-3 py-2">
-              Small-batch dye lots
-            </span>
-            <span className="rounded-full bg-white/10 px-3 py-2">
-              Ships with care card
-            </span>
+
+            <div className="devi-orb relative">
+              <div className="grid gap-4 md:grid-cols-[0.82fr_1fr]">
+                <div className="paper-luxe order-2 rounded-[2.1rem] p-4 md:order-1 md:translate-y-16">
+                  <div className="relative aspect-[0.76] overflow-hidden rounded-[1.6rem]">
+                    <Image
+                      src="/devi/devi-2.jpg"
+                      alt="Devi Divine movement portrait"
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 18vw, 45vw"
+                    />
+                  </div>
+                  <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-muted">
+                    Sacred motion
+                  </p>
+                  <p className="mt-2 font-display text-2xl text-ink">
+                    Breath, posture, softness.
+                  </p>
+                </div>
+
+                <div className="paper-luxe order-1 rounded-[2.4rem] p-5 md:order-2">
+                  <div className="relative aspect-[0.92] overflow-hidden rounded-[1.8rem]">
+                    <Image
+                      src="/devi/devi-3.jpg"
+                      alt="Devi Divine editorial image"
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 28vw, 80vw"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(36,29,23,0),rgba(36,29,23,0.2))]" />
+                  </div>
+                  <div className="mt-5 grid gap-3 md:grid-cols-2">
+                    {heroProduct && (
+                      <div className="rounded-[1.5rem] bg-[rgba(255,255,255,0.72)] px-4 py-4">
+                        <p className="text-[10px] uppercase tracking-[0.28em] text-muted">
+                          New arrival
+                        </p>
+                        <p className="mt-2 font-display text-2xl text-ink">
+                          {heroProduct.name}
+                        </p>
+                        {heroProduct.tagline && (
+                          <p className="mt-2 text-sm leading-6 text-muted">
+                            {heroProduct.tagline}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    {secondProduct && (
+                      <div className="rounded-[1.5rem] bg-[rgba(122,0,9,0.9)] px-4 py-4 text-[#fff6ef]">
+                        <p className="text-[10px] uppercase tracking-[0.28em] text-[#f1d9ca]">
+                          Studio favorite
+                        </p>
+                        <p className="mt-2 font-display text-2xl">
+                          {secondProduct.name}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-[#f1d9ca]">
+                          Designed to move with the body instead of sitting away from it.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* STORY */}
-      <section className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 pb-20 pt-16 md:px-10">
-        <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative overflow-hidden rounded-3xl border border-black/5 bg-white shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/30 to-[#e9dfd0]/60" />
-            <div className="relative space-y-4 p-8 md:p-10">
-              <p className="text-sm uppercase tracking-[0.2em] text-muted">
-                Made to feel
-              </p>
-              <h2 className="text-3xl font-semibold leading-tight text-ink">
-                Ritual wear that moves with you.
-              </h2>
-              <p className="text-base text-muted">
-                Breathable layers, hand-drawn prints, and silhouettes that let
-                you dance, pray, and play. Soft structure, warm light, and
-                fabrics that stay beautiful in motion.
-              </p>
-              <ul className="space-y-2 text-sm text-muted">
-                <li>• Small-batch styling built around real movement.</li>
-                <li>• High-contrast layouts that stay easy to read.</li>
-                <li>• A calmer pace, from browse to checkout.</li>
-              </ul>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-3xl border border-black/5 bg-white shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
-            <div className="relative h-full min-h-[320px]">
+      <section className="section-shell py-24 md:py-32">
+        <div className="editorial-grid items-center gap-10">
+          <div className="relative">
+            <div className="overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(72,48,38,0.14)]">
               <Image
                 src="/devi/devi-1.jpg"
-                alt="Devi on the ghats"
-                fill
-                className="object-cover"
-                priority
+                alt="Weaving in warm light"
+                width={900}
+                height={1100}
+                className="h-auto w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-sm uppercase tracking-[0.25em] text-white/70">
-                  Shot on location
-                </p>
-                <h3 className="text-2xl font-semibold text-white">
-                  Devotion in motion—sun, stone, and water.
-                </h3>
-                <p className="mt-2 text-sm text-white/80">
-                  Real light, no studio tricks. Text stays readable with layered
-                  gradients.
-                </p>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {featured && (
-        <section
-          id="rituals"
-          className="relative z-10 mx-auto mt-6 w-full max-w-6xl px-6 md:px-10"
-        >
-          <div className="grid gap-6 overflow-hidden rounded-3xl border border-black/5 bg-white/80 shadow-[0_30px_90px_rgba(0,0,0,0.08)] md:grid-cols-[1.1fr_0.9fr]">
-            <div className="relative min-h-[440px]">
+            <div className="paper-panel absolute -bottom-10 right-4 hidden w-44 rounded-[1.6rem] p-3 md:block">
               <Image
-                src={featured.heroImage}
-                alt={featured.name}
-                fill
-                className="object-cover"
-                priority
+                src="/devi/devi-3.jpg"
+                alt="Fabric detail"
+                width={320}
+                height={420}
+                className="h-auto w-full rounded-[1.2rem] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-white/70">
-                    Featured ritual
-                  </p>
-                  <h3 className="text-3xl font-semibold text-white">
-                    {featured.name}
-                  </h3>
-                  {featured.tagline && (
-                    <p className="text-white/80">{featured.tagline}</p>
-                  )}
-                </div>
-                <Link href={`/products/${featured.slug}`} className="btn btn-light">
-                  View ritual
-                </Link>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 p-8 md:p-10">
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <span className="h-1 w-6 rounded-full bg-ink" />
-                A focus on material and light
-              </div>
-              <p className="text-lg text-ink">{featured.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {featured.tags.slice(0, 4).map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-black/10 px-3 py-1 text-xs uppercase tracking-wide text-muted"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-auto flex items-center justify-between rounded-2xl border border-black/5 bg-[#f3ede3] px-4 py-3">
-                <div>
-                  <p className="text-sm text-muted">Starting at</p>
-                  <p className="text-2xl font-semibold text-ink">
-                    {money(featured.priceCents)}
-                  </p>
-                </div>
-                <Link href={`/products/${featured.slug}`} className="btn btn-primary">
-                  Buy now
-                </Link>
-              </div>
             </div>
           </div>
-        </section>
-      )}
 
-      <section
-        id="collection"
-        className="relative z-10 mx-auto mt-16 w-full max-w-6xl px-6 md:px-10"
-      >
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-sm uppercase tracking-[0.25em] text-muted">
-              The collection
+          <div className="space-y-8">
+            <span className="kicker">Our Heritage</span>
+            <h2 className="font-display text-5xl italic leading-[0.92] text-ink md:text-7xl">
+              Sun-Bleached Silence,
+              <br />
+              Worn in Intention.
+            </h2>
+            <p className="max-w-xl text-lg font-light leading-8 text-muted">
+              Every piece begins in stillness and is shaped for a life in motion.
+              Breathable cloth, softened structure, and earth-led color let the
+              garments move from practice into the street without losing grace.
             </p>
-            <h2 className="text-3xl font-semibold">Essentials that do more.</h2>
-          </div>
-          <Link href="/products" className="btn btn-outline">
-            View all
-          </Link>
-        </div>
-        <div className="mt-6 grid gap-6 md:grid-cols-3">
-          {supporting.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="materials"
-        className="relative z-10 mx-auto mt-20 w-full max-w-6xl px-6 md:px-10"
-      >
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "Skin-safe & clean",
-              text: "Formulated without parabens, sulfates, or microplastics. Always cruelty-free.",
-            },
-            {
-              title: "Natural fibers",
-              text: "Breathable cottons and silks chosen to move, not cling.",
-            },
-            {
-              title: "Care made simple",
-              text: "Cold wash, hang dry. Each package includes a 3-step care card.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-3xl border border-black/5 bg-white/70 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.06)]"
-            >
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="contact"
-        className="relative z-10 mx-auto mt-20 w-full max-w-6xl px-6 pb-24 md:px-10"
-      >
-        <div className="overflow-hidden rounded-3xl border border-black/5 bg-gradient-to-br from-[#0f1118] via-[#1a1d25] to-[#2e3038] text-white shadow-[0_30px_90px_rgba(0,0,0,0.16)]">
-          <div className="grid gap-6 p-10 md:grid-cols-[1.1fr_0.9fr] md:p-14">
-            <div className="space-y-4">
-              <p className="text-sm uppercase tracking-[0.25em] text-white/70">
-                Contact & consultations
+            <p className="max-w-xl text-lg font-light leading-8 text-muted">
+              It is less a wardrobe than a daily ritual: something to return to,
+              again and again, in good light.
+            </p>
+            <div className="paper-luxe max-w-xl rounded-[1.8rem] px-6 py-6">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-muted">
+                What defines the line
               </p>
-              <h3 className="text-3xl font-semibold">
-                Need a custom look, a private fitting, or a special order?
-              </h3>
-              <p className="text-white/80">
-                Share what you are preparing for and we will answer with the
-                right pieces, timing, and styling notes for your ritual.
-              </p>
-              <div className="flex gap-3">
-                <Link href="/contact" className="btn btn-light">
-                  Open contact page
-                </Link>
-                <Link href="/admin" className="btn btn-ghost">
-                  Go to admin
-                </Link>
+              <div className="mt-4 grid gap-3 text-sm text-muted">
+                <p>01 / Breathable layering that never feels overbuilt.</p>
+                <p>02 / Hand-drawn prints and sacred color stories.</p>
+                <p>03 / Editorial silhouettes softened for everyday use.</p>
               </div>
             </div>
-            <div className="relative overflow-hidden rounded-2xl bg-white/5 p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
-              <div className="relative space-y-3 text-sm text-white/80">
-                <p className="text-base text-white">
-                  Send a note and it reaches the studio directly. Replies
-                  usually go out within a day.
-                </p>
-                <p className="text-base text-white">
-                  For custom pieces, include measurements, preferred colors,
-                  and the feeling you want the look to carry.
-                </p>
-              </div>
-            </div>
+            <Link href="/materials" className="btn btn-link">
+              Read the artisan story
+            </Link>
           </div>
         </div>
       </section>
+
+      <section className="pattern-lattice bg-[rgba(248,243,229,0.76)] py-24 md:py-32">
+        <div className="section-shell">
+          <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="kicker">The Seasonal Loom</span>
+              <h2 className="mt-4 font-display text-5xl italic text-ink md:text-6xl">
+                Featured Rituals
+              </h2>
+            </div>
+            <Link href="/products" className="font-display text-xl italic text-accent transition hover:text-accent-soft">
+              View All Collections
+            </Link>
+          </div>
+
+          <div className="grid gap-10 md:grid-cols-3">
+            {products.slice(0, 3).map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                variant={index === 0 ? "arch" : index === 1 ? "classic" : "framed"}
+                offset={index === 1}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell py-24 md:py-28">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="paper-luxe rounded-[2.4rem] px-8 py-10">
+            <span className="kicker">Why it feels different</span>
+            <h3 className="mt-5 font-display text-4xl italic leading-tight text-ink md:text-5xl">
+              The line between dressing and ritual gets softer here.
+            </h3>
+            <p className="mt-6 text-base leading-8 text-muted">
+              Every look is styled to feel sacred without becoming costume. The
+              proportions stay relaxed, the textures stay legible, and the whole
+              experience remains calm from first scroll to final checkout.
+            </p>
+          </div>
+
+          <div className="paper-luxe rounded-[2.4rem] px-8 py-10 text-center">
+            <p className="font-display text-3xl italic leading-relaxed text-ink md:text-5xl">
+              “Slipping into the robe feels like a return to warm stone and quiet sun.
+              The fabric carries a stillness that changes the whole day.”
+            </p>
+            <p className="mt-8 text-xs uppercase tracking-[0.28em] text-muted">
+              Elena R. / San Francisco
+            </p>
+            {thirdProduct && (
+              <div className="mt-8 inline-flex rounded-full bg-[rgba(255,255,255,0.72)] px-5 py-3 text-[10px] uppercase tracking-[0.28em] text-accent">
+                Also adored: {thirdProduct.name}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative h-[34rem] overflow-hidden md:h-[44rem]">
+        <Image
+          src="/devi/devi-5.jpg"
+          alt="Devotion in water"
+          fill
+          className="object-cover sepia-[0.08] contrast-[1.05]"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(122,0,9,0.18),rgba(36,29,23,0.18))]" />
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <div className="glass-nav max-w-xl rounded-[2rem] px-8 py-10 text-center shadow-[0_26px_80px_rgba(72,48,38,0.16)]">
+            <h3 className="font-display text-4xl italic text-ink md:text-5xl">
+              Woven for Lifetimes
+            </h3>
+            <p className="mt-5 text-lg leading-8 text-muted">
+              Created to age with you, gather memory, and soften beautifully through
+              seasons of use.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </main>
   );

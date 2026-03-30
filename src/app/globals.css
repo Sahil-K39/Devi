@@ -1,24 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Kalam:wght@300;400;700&family=Marcellus&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600;6..72,700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --font-body: "Times New Roman", Georgia, serif;
-  --font-display: "Times New Roman", Georgia, serif;
-  --bg: #f7f3ec;
-  --ink: #0d0d10;
-  --muted: #6c6860;
-  --accent: #0f1118;
-  --accent-soft: #e8e1d6;
-  --glow: radial-gradient(900px 900px at 20% 15%, rgba(255, 215, 182, 0.45), transparent),
-    radial-gradient(800px 800px at 80% 30%, rgba(151, 189, 255, 0.35), transparent),
-    radial-gradient(700px 700px at 50% 90%, rgba(255, 255, 255, 0.5), transparent);
+  --font-body: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-accent: "Kalam", cursive;
+  --font-admin: "Marcellus", Georgia, serif;
+  --bg: #fef9eb;
+  --paper: #fffdf7;
+  --paper-soft: #f8f3e5;
+  --paper-deep: #ede8da;
+  --ink: #241d17;
+  --muted: #6b5d50;
+  --vermillion: #7a0009;
+  --vermillion-deep: #9e1b1b;
+  --gold: #b88a1e;
+  --gold-soft: #f2d57c;
+  --outline: rgba(122, 0, 9, 0.12);
+  --admin-bg: #170f10;
+  --admin-panel: #2d1b1d;
+  --admin-panel-soft: #3a2527;
+  --admin-text: #f5d9d3;
+  --admin-muted: #ccb0a9;
+  --admin-accent: #ffb4ab;
+  --page-glow:
+    radial-gradient(circle at top left, rgba(212, 175, 55, 0.16), transparent 34%),
+    radial-gradient(circle at 85% 20%, rgba(122, 0, 9, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 28%);
 }
 
 @theme inline {
   --color-base: var(--bg);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-soft: var(--accent-soft);
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+  --color-paper-deep: var(--paper-deep);
+  --color-accent: var(--vermillion);
+  --color-accent-soft: var(--gold);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -27,11 +46,19 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.54), transparent 22%),
+    var(--page-glow),
+    var(--bg);
   color: var(--ink);
-  font-family: var(--font-body), system-ui, -apple-system, serif;
+  font-family: var(--font-body);
   text-rendering: optimizeLegibility;
 }
 
@@ -39,79 +66,294 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: var(--glow);
-  opacity: 0.7;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(107, 93, 80, 0.12) 1px, transparent 0),
+    linear-gradient(45deg, rgba(122, 0, 9, 0.03) 25%, transparent 25%, transparent 75%, rgba(122, 0, 9, 0.03) 75%),
+    linear-gradient(-45deg, rgba(122, 0, 9, 0.03) 25%, transparent 25%, transparent 75%, rgba(122, 0, 9, 0.03) 75%);
+  background-size: 32px 32px, 96px 96px, 96px 96px;
+  opacity: 0.3;
   pointer-events: none;
-  filter: blur(60px);
   z-index: 0;
+}
+
+main,
+header,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 a {
   color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 ::selection {
-  background: #0f1118;
-  color: #fdfbf5;
+  background: rgba(122, 0, 9, 0.18);
+  color: var(--ink);
 }
 
-/* Buttons — consistent, high-contrast */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+.font-admin {
+  font-family: var(--font-admin);
+}
+
+.kicker {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.section-shell {
+  margin-inline: auto;
+  width: min(100%, 90rem);
+  padding-inline: 1.5rem;
+}
+
+.paper-panel {
+  background: color-mix(in srgb, var(--paper) 84%, white 16%);
+  box-shadow: 0 28px 80px rgba(88, 61, 48, 0.08);
+}
+
+.paper-luxe {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 253, 247, 0.88)),
+    color-mix(in srgb, var(--paper) 84%, white 16%);
+  border: 1px solid rgba(122, 0, 9, 0.08);
+  box-shadow:
+    0 28px 80px rgba(88, 61, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.paper-inset {
+  background: color-mix(in srgb, var(--paper-deep) 86%, white 14%);
+}
+
+.glass-nav {
+  background: rgba(254, 249, 235, 0.84);
+  backdrop-filter: blur(16px);
+}
+
+.pattern-lattice {
+  background-image:
+    linear-gradient(rgba(122, 0, 9, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122, 0, 9, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.42), transparent 70%);
+  background-size: 36px 36px, 36px 36px, auto;
+}
+
+.devi-orb {
+  position: relative;
+  isolation: isolate;
+}
+
+.devi-orb::before {
+  content: "";
+  position: absolute;
+  inset: auto;
+  width: 20rem;
+  height: 20rem;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at center, rgba(255, 228, 194, 0.85), transparent 58%),
+    radial-gradient(circle at 40% 40%, rgba(122, 0, 9, 0.16), transparent 68%);
+  filter: blur(8px);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(122, 0, 9, 0.1);
+  background: rgba(255, 253, 247, 0.68);
+  padding: 0.72rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  box-shadow: 0 16px 28px rgba(88, 61, 48, 0.06);
+}
+
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(122, 0, 9, 0.12),
+    rgba(184, 138, 30, 0.24),
+    transparent
+  );
+}
+
+.editorial-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .editorial-grid {
+    grid-template-columns: 1.04fr 0.96fr;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.6rem;
   border-radius: 9999px;
+  font-size: 0.82rem;
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  padding: 0.9rem 1.5rem;
-  transition: transform 150ms ease, box-shadow 200ms ease, background 150ms ease,
-    color 150ms ease, border-color 150ms ease;
-  border: 1px solid transparent;
-  text-decoration: none;
-  color: inherit;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transition:
+    transform 180ms ease,
+    box-shadow 220ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
 }
-.btn:focus-visible {
-  outline: 2px solid #0f1118;
-  outline-offset: 2px;
+
+.btn:hover {
+  transform: translateY(-1px);
 }
+
 .btn-primary {
-  background: var(--ink);
-  color: #fff;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+  color: #fff8f1;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 46%),
+    linear-gradient(135deg, var(--vermillion), var(--vermillion-deep));
+  box-shadow: 0 18px 40px rgba(122, 0, 9, 0.16);
 }
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.25);
+
+.btn-secondary {
+  color: #2a1f00;
+  background: linear-gradient(135deg, #ffe39b, #f2cc69);
+  box-shadow: 0 16px 32px rgba(184, 138, 30, 0.16);
 }
-.btn-light {
-  background: #fff;
-  color: var(--ink);
-  border-color: #0d0d10;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
-}
-.btn-light:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
-}
+
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--vermillion);
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(122, 0, 9, 0.12);
+  box-shadow: 0 14px 30px rgba(88, 61, 48, 0.06);
 }
-.btn-ghost:hover {
-  transform: translateY(-2px);
-  border-color: #fff;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+
+.btn-link {
+  color: var(--vermillion);
+  padding-inline: 0;
+  letter-spacing: 0.18em;
 }
-.btn-outline {
-  background: transparent;
+
+.soft-field,
+.soft-textarea,
+.soft-select {
+  width: 100%;
+  border: none;
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--paper-deep) 88%, white 12%);
   color: var(--ink);
-  border-color: rgba(0, 0, 0, 0.12);
+  padding: 1rem 1.1rem;
+  outline: 1px solid transparent;
+  transition: outline-color 180ms ease, transform 180ms ease, background-color 180ms ease;
 }
-.btn-outline:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+
+.soft-field:focus,
+.soft-textarea:focus,
+.soft-select:focus {
+  outline-color: rgba(122, 0, 9, 0.18);
+  background: color-mix(in srgb, white 88%, var(--paper-deep) 12%);
+}
+
+.soft-textarea {
+  min-height: 11rem;
+  resize: vertical;
+}
+
+.label-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.label-stack span {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 84%, white 16%);
+}
+
+.admin-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 30%, rgba(255, 180, 171, 0.08), transparent 16%),
+    radial-gradient(circle at 25% 95%, rgba(76, 180, 184, 0.32), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%),
+    var(--admin-bg);
+  color: var(--admin-text);
+}
+
+.admin-panel {
+  background: linear-gradient(180deg, rgba(58, 37, 39, 0.96), rgba(45, 27, 29, 0.96));
+  box-shadow: 0 36px 80px rgba(0, 0, 0, 0.32);
+}
+
+.admin-muted {
+  color: var(--admin-muted);
+}
+
+.admin-input,
+.admin-textarea,
+.admin-select {
+  width: 100%;
+  border: none;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--admin-text);
+  outline: 1px solid rgba(255, 180, 171, 0.12);
+  padding: 0.9rem 1rem;
+  transition: outline-color 180ms ease, background-color 180ms ease;
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+  outline-color: rgba(255, 180, 171, 0.32);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-textarea {
+  min-height: 11rem;
+  resize: vertical;
+}
+
+.admin-summary {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 171, 0.08);
 }

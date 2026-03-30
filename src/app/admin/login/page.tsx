@@ -1,13 +1,13 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { signIn } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AdminLogin() {
   return (
-    <Suspense fallback={<main className="min-h-screen bg-base" />}>
+    <Suspense fallback={<main className="admin-page min-h-screen" />}>
       <LoginForm />
     </Suspense>
   );
@@ -26,52 +26,72 @@ function LoginForm() {
     const formData = new FormData(event.currentTarget);
     setLoading(true);
     setError(null);
+
     const res = await signIn("credentials", {
       redirect: false,
       email: formData.get("email"),
       password: formData.get("password"),
       callbackUrl,
     });
+
     setLoading(false);
+
     if (res?.error) {
-      setError("Invalid credentials");
+      setError("The sanctuary denied that credential. Check the email and password.");
       return;
     }
+
     router.push(callbackUrl);
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-base text-ink">
-      <div className="w-full max-w-md rounded-3xl border border-black/5 bg-white/80 p-8 shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
-        <p className="text-sm uppercase tracking-[0.25em] text-muted">Admin</p>
-        <h1 className="mt-2 text-3xl font-semibold">Sign in</h1>
-        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-          <input
-            name="email"
-            type="email"
-            required
-            className="w-full rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
-            placeholder="admin@devidivine.com"
-          />
-          <input
-            name="password"
-            type="password"
-            required
-            className="w-full rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
-            placeholder="••••••••"
-          />
+    <main className="admin-page flex min-h-screen items-center justify-center px-6 py-16">
+      <div className="admin-panel w-full max-w-2xl rounded-[2.6rem] px-8 py-10 md:px-12">
+        <p className="font-accent text-2xl text-[var(--admin-accent)]">Divine entry</p>
+        <h1 className="mt-3 font-admin text-5xl text-[var(--admin-text)]">
+          Enter the curator sanctuary
+        </h1>
+        <p className="mt-5 max-w-xl text-sm leading-8 text-[var(--admin-muted)]">
+          This space is for product stewardship, ritual notes, and the quiet mechanics
+          behind the storefront.
+        </p>
+
+        <form className="mt-10 space-y-5" onSubmit={handleSubmit}>
+          <label className="label-stack">
+            <span className="!text-[var(--admin-muted)]">Email</span>
+            <input
+              name="email"
+              type="email"
+              required
+              className="admin-input"
+              placeholder="admin@devidivine.com"
+            />
+          </label>
+          <label className="label-stack">
+            <span className="!text-[var(--admin-muted)]">Password</span>
+            <input
+              name="password"
+              type="password"
+              required
+              className="admin-input"
+              placeholder="••••••••"
+            />
+          </label>
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.2)] disabled:opacity-60"
+            className="btn w-full bg-[linear-gradient(135deg,#ffb4ab,#c9685d)] text-[#2d1412] disabled:opacity-60"
           >
-            {loading ? "Signing in…" : "Enter"}
+            {loading ? "Opening sanctuary" : "Enter sanctuary"}
           </button>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+
+          {error && <p className="text-sm text-[#ffb4ab]">{error}</p>}
         </form>
-        <div className="mt-6 text-sm text-muted">
-          <Link href="/" className="underline">
-            Back to site
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="/" className="btn btn-ghost">
+            Back to storefront
           </Link>
         </div>
       </div>

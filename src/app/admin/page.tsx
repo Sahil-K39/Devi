@@ -1,8 +1,10 @@
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getAllProducts, getMessages } from "@/lib/content-store";
-import Link from "next/link";
+import { AdminShell } from "@/components/AdminShell";
 
 export const dynamic = "force-dynamic";
 
@@ -13,67 +15,95 @@ export default async function AdminHome() {
   }
 
   const [products, messages] = await Promise.all([getAllProducts(), getMessages()]);
-  const productCount = products.length;
-  const messageCount = messages.length;
+  const featured = products[0];
 
   return (
-    <main className="min-h-screen bg-base text-ink">
-      <header className="flex items-center justify-between border-b border-black/5 bg-white/70 px-6 py-4 shadow-sm backdrop-blur-sm">
-        <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted">
-            Admin
+    <AdminShell
+      active="home"
+      title="Divine Admin"
+      subtitle="Guardians of the Sacred Arts"
+      aside={
+        featured ? (
+          <div className="admin-panel rounded-[2.2rem] p-6">
+            <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--admin-muted)]">
+              Recently enshrined
+            </p>
+            <div className="mt-5 overflow-hidden rounded-[1.6rem] bg-white/5">
+              <Image
+                src={featured.heroImage}
+                alt={featured.name}
+                width={560}
+                height={720}
+                className="h-56 w-full object-cover"
+              />
+            </div>
+            <h3 className="mt-6 font-admin text-3xl text-[var(--admin-text)]">
+              {featured.name}
+            </h3>
+            <p className="mt-2 text-sm leading-7 text-[var(--admin-muted)]">
+              {featured.tagline ?? featured.description}
+            </p>
+            <div className="mt-6 space-y-3 text-xs uppercase tracking-[0.24em] text-[var(--admin-muted)]">
+              <p>Imagery captured</p>
+              <p>Pedigree confirmed</p>
+              <p>Sanctity review pending</p>
+            </div>
+          </div>
+        ) : null
+      }
+    >
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="admin-panel rounded-[2.4rem] p-8">
+          <h2 className="font-admin text-4xl text-[var(--admin-accent)]">
+            Atelier overview
+          </h2>
+          <p className="mt-4 max-w-xl text-sm leading-8 text-[var(--admin-muted)]">
+            Keep the collection, inquiries, and the sacred storefront aligned from
+            one place.
           </p>
-          <h1 className="text-2xl font-semibold">Studio desk</h1>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <StatCard label="Active artifacts" value={products.length.toString()} />
+            <StatCard label="Inbox notes" value={messages.length.toString()} />
+            <StatCard label="Checkout flow" value="Live" />
+          </div>
         </div>
-        <Link
-          href="/"
-          className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
-        >
-          View site
-        </Link>
-      </header>
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-10">
-        <div className="grid gap-4 md:grid-cols-3">
-          <StatCard label="Products" value={productCount} href="/admin/products" />
-          <StatCard label="Messages" value={messageCount} href="/admin/messages" />
-          <StatCard label="Orders" value="Checkout live" href="/checkout/success" />
+
+        <div className="admin-panel rounded-[2.4rem] p-8">
+          <h2 className="font-admin text-4xl text-[var(--admin-accent)]">
+            Quick passage
+          </h2>
+          <div className="mt-8 grid gap-4">
+            <ActionCard
+              title="Curate the vault"
+              body="Create, edit, or hide pieces from the collection."
+              href="/admin/products"
+            />
+            <ActionCard
+              title="Open messages"
+              body="Review requests arriving from the studio form."
+              href="/admin/messages"
+            />
+            <ActionCard
+              title="View storefront"
+              body="See the public site exactly as visitors do."
+              href="/"
+            />
+          </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          <ActionCard
-            title="Products"
-            body="Create, update, or hide products from the collection."
-            href="/admin/products"
-            cta="Manage products"
-          />
-          <ActionCard
-            title="Messages"
-            body="Review new inquiries and keep the inbox organized."
-            href="/admin/messages"
-            cta="Open inbox"
-          />
-        </div>
-      </section>
-    </main>
+      </div>
+    </AdminShell>
   );
 }
 
-function StatCard({
-  label,
-  value,
-  href,
-}: {
-  label: string;
-  value: string | number;
-  href: string;
-}) {
+function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <Link
-      href={href}
-      className="rounded-2xl border border-black/5 bg-white/80 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.08)] transition hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(0,0,0,0.12)]"
-    >
-      <p className="text-sm text-muted">{label}</p>
-      <p className="text-3xl font-semibold text-ink">{value}</p>
-    </Link>
+    <div className="rounded-[1.8rem] bg-white/5 px-6 py-6 text-center shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
+      <p className="text-4xl font-admin text-[var(--admin-accent)]">{value}</p>
+      <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-[var(--admin-muted)]">
+        {label}
+      </p>
+    </div>
   );
 }
 
@@ -81,23 +111,18 @@ function ActionCard({
   title,
   body,
   href,
-  cta,
 }: {
   title: string;
   body: string;
   href: string;
-  cta: string;
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-3xl border border-black/5 bg-white/70 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.06)]">
-      <h3 className="text-xl font-semibold">{title}</h3>
-      <p className="text-sm text-muted">{body}</p>
-      <Link
-        href={href}
-        className="mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.2)]"
-      >
-        {cta}
-      </Link>
-    </div>
+    <Link
+      href={href}
+      className="rounded-[1.8rem] bg-white/5 px-6 py-6 transition hover:-translate-y-0.5 hover:bg-white/[0.07]"
+    >
+      <h3 className="font-admin text-2xl text-[var(--admin-text)]">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-[var(--admin-muted)]">{body}</p>
+    </Link>
   );
 }

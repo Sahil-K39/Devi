@@ -13,6 +13,7 @@ export function ContactForm() {
     const formData = new FormData(event.currentTarget);
     setStatus("sending");
     setError(null);
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -24,10 +25,12 @@ export function ContactForm() {
           message: formData.get("message"),
         }),
       });
+
       if (!res.ok) {
-        const body = await res.json();
+        const body = await res.json().catch(() => ({}));
         throw new Error(body?.message || "Unable to send");
       }
+
       setStatus("sent");
       event.currentTarget.reset();
     } catch (err) {
@@ -37,59 +40,58 @@ export function ContactForm() {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="flex flex-col gap-2 text-sm">
-          Name
-          <input
-            name="name"
-            required
-            className="rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
-            placeholder="Your name"
-          />
+    <form className="space-y-5" onSubmit={handleSubmit}>
+      <div className="grid gap-5 md:grid-cols-2">
+        <label className="label-stack">
+          <span>Name</span>
+          <input name="name" required className="soft-field" placeholder="Your name" />
         </label>
-        <label className="flex flex-col gap-2 text-sm">
-          Email
+        <label className="label-stack">
+          <span>Email</span>
           <input
             name="email"
             type="email"
             required
-            className="rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
+            className="soft-field"
             placeholder="you@example.com"
           />
         </label>
       </div>
-      <label className="flex flex-col gap-2 text-sm">
-        Phone (optional)
+
+      <label className="label-stack">
+        <span>Phone</span>
         <input
           name="phone"
-          className="rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
+          className="soft-field"
           placeholder="+1 (555) 123-4567"
         />
       </label>
-      <label className="flex flex-col gap-2 text-sm">
-        Message
+
+      <label className="label-stack">
+        <span>Message</span>
         <textarea
           name="message"
-          rows={4}
+          rows={5}
           required
-          className="rounded-xl border border-black/10 bg-white px-3 py-3 text-sm outline-none transition focus:border-ink"
-          placeholder="Tell us what you need…"
+          className="soft-textarea"
+          placeholder="Tell us what you need, what drew you in, or what you are preparing for."
         />
       </label>
+
       <button
         type="submit"
         disabled={status === "sending"}
-        className="btn btn-primary w-full disabled:opacity-60"
+        className="btn btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {status === "sending" ? "Sending…" : "Send message"}
+        {status === "sending" ? "Sending note" : "Send to the studio"}
       </button>
+
       {status === "sent" && (
-        <p className="text-sm text-green-600">
-          Message received. We will reply shortly.
+        <p className="text-sm text-[#5f6f3a]">
+          Your note has reached the studio. We&apos;ll reply shortly.
         </p>
       )}
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-[#a32727]">{error}</p>}
     </form>
   );
 }

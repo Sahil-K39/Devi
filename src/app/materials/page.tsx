@@ -2,22 +2,22 @@ import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const bullets = [
+const materialNotes = [
   {
     title: "Natural fibers first",
-    body: "Breathable cottons and silks, chosen to move with you and dry quickly after water rituals.",
+    body: "Breathable cottons and silks chosen to move with you and soften over time.",
   },
   {
     title: "Skin-safe dyes",
-    body: "Low-impact pigments—no harsh chemicals on fabric or skin.",
+    body: "Earth-led tones and warm pigments that feel rich without becoming harsh.",
   },
   {
     title: "Stitching for motion",
-    body: "Reinforced seams at stress points so squats, spins, and dances don’t tear threads.",
+    body: "Stress points are reinforced so the garments hold through practice and wear.",
   },
   {
-    title: "Care that’s simple",
-    body: "Cold wash, hang dry. Every item ships with a 3-step care card inside the package.",
+    title: "Care that stays simple",
+    body: "Cold wash, hang dry, and let the cloth gather its own memory.",
   },
 ];
 
@@ -25,39 +25,40 @@ export default function MaterialsPage() {
   return (
     <main className="min-h-screen bg-base text-ink">
       <Navbar />
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-28 md:px-10">
-        <div className="flex flex-col gap-3">
-          <p className="text-sm uppercase tracking-[0.25em] text-muted">Materials</p>
-          <h1 className="text-4xl font-semibold">What you feel on skin.</h1>
-          <p className="max-w-2xl text-muted">
-            Honest fibers, visible texture, and finishing that holds up in
-            movement. We keep the page quiet so the materials can speak for
-            themselves.
-          </p>
-        </div>
+      <section className="section-shell pt-36 pb-20">
+        <span className="kicker">Material prayer</span>
+        <h1 className="mt-4 font-display text-5xl italic text-accent md:text-7xl">
+          What you feel on skin
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg font-light leading-8 text-muted">
+          Honest fibers, visible texture, and finishing that holds up in motion.
+          We keep the page quiet so the materials can speak for themselves.
+        </p>
 
-        <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-          <div className="grid gap-4 rounded-3xl border border-black/5 bg-white p-6 shadow-[0_22px_60px_rgba(0,0,0,0.06)]">
-            {bullets.map((b) => (
-              <div
-                key={b.title}
-                className="rounded-2xl border border-black/5 bg-[#f4ede3] p-4"
-              >
-                <h3 className="text-lg font-semibold text-ink">{b.title}</h3>
-                <p className="text-sm text-muted">{b.body}</p>
-              </div>
-            ))}
+        <div className="mt-14 grid gap-8 md:grid-cols-[1fr_0.9fr]">
+          <div className="paper-luxe rounded-[2.3rem] p-6 md:p-8">
+            <div className="grid gap-4">
+              {materialNotes.map((note) => (
+                <div key={note.title} className="paper-inset rounded-[1.6rem] px-5 py-5">
+                  <h2 className="font-display text-3xl italic text-ink">{note.title}</h2>
+                  <p className="mt-3 text-base font-light leading-7 text-muted">
+                    {note.body}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-black/5 bg-white shadow-[0_22px_60px_rgba(0,0,0,0.06)]">
-            <div className="relative aspect-[4/5]">
+
+          <div className="paper-luxe overflow-hidden rounded-[2.5rem] p-4">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.8rem]">
               <Image
                 src="/devi/devi-3.jpg"
-                alt="Fabric detail"
+                alt="Material detail"
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 rounded-full bg-white/85 px-4 py-2 text-sm font-semibold text-ink">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
+              <div className="absolute bottom-6 left-6 rounded-full bg-[rgba(255,253,247,0.92)] px-5 py-3 text-xs uppercase tracking-[0.24em] text-accent">
                 Hand-finished hems
               </div>
             </div>
