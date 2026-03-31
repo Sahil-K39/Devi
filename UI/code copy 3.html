@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300;400;600;700&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed": "#1f1b17",
+              "tertiary-fixed": "#ffdbd0",
+              "primary-fixed-dim": "#e9bf90",
+              "on-surface-variant": "#5c544e",
+              "secondary": "#a62c2b", // Vermillion
+              "inverse-surface": "#31302d",
+              "primary": "#a62c2b", // Vermillion
+              "primary-fixed": "#ffddb9",
+              "outline": "#a38c82",
+              "tertiary-fixed-dim": "#ffb59e",
+              "on-tertiary-fixed-variant": "#77321b",
+              "on-tertiary-fixed": "#3a0b00",
+              "error": "#ba1a1a",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#f1e8e4",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#d4af37", // Gold
+              "inverse-on-surface": "#f3f0eb",
+              "on-surface": "#2d2926",
+              "primary-container": "#f1e8e4",
+              "on-secondary-container": "#416261",
+              "inverse-primary": "#e9bf90",
+              "surface-container-high": "#f0ede8",
+              "surface-container-low": "#fcf9f4",
+              "on-tertiary-container": "#ffffff",
+              "outline-variant": "#d7c2ba",
+              "surface-tint": "#a62c2b",
+              "surface": "#fcf9f4",
+              "on-primary-fixed": "#2b1700",
+              "background": "#fcf9f4",
+              "on-background": "#2d2926",
+              "secondary-fixed-dim": "#cec5be",
+              "on-secondary-fixed-variant": "#4c4641",
+              "tertiary": "#d4af37", // Gold
+              "on-primary": "#ffffff",
+              "surface-dim": "#e5e2dd",
+              "surface-container": "#f7f3f0",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "surface-bright": "#fcf9f4",
+              "on-primary-container": "#a62c2b",
+              "surface-container-highest": "#e5e2dd",
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#ebe1da",
+              "on-primary-fixed-variant": "#5e411d",
+              "surface-variant": "#f1e8e4"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif Devanagari", "serif"],
+              "body": ["Be Vietnam Pro", "sans-serif"],
+              "label": ["Be Vietnam Pro", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24
+    }
+.font-headline {
+    font-family: "Noto Serif Devanagari", serif
+    }
+/* Sacred Carving Feel */
+.carved-bg {
+    background-color: #fcf9f4;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDpjcXluYoEJlribkqXMsbdPc4u30Ijh8bxC8_TVHSB4mLjlq6_MEySsyW2b7SGEud2xLpldlcijHf1uo6gserPTtHiqjTow1w6PYJbHkhGpyT9yjIfbFYDlsL-3IntPpS4jCfTsmozHHyi_8bmaXeXYMSv3fFIwv3N0ivcn8b_TovIpwXPAqrK5YQ77eiyR8kOJJTkgFZmDaQLSiudjumAWj96ty65QEvJLI4tqrn6NJOO88vTQvLtVxNQTT6Zl0Jh_Tfd6-sILeE)
+    }
+.arch-frame {
+    clip-path: ellipse(100% 100% at 50% 100%);
+    border-radius: 50% 50% 0 0/15% 15% 0 0
+    }
+.block-print-border {
+    position: relative
+    }
+.block-print-border::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(166, 44, 43, 0.2);
+    pointer-events: none
+    }
+.gold-leaf-hover:hover {
+    color: #d4af37;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3)
+    }</style>
+</head>
+<body class="carved-bg text-on-surface font-body selection:bg-tertiary/20">
+<!-- TopAppBar Shared Component -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf9f4]/90 backdrop-blur-xl border-b border-primary/10 transition-all duration-300">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-headline font-bold tracking-tighter text-primary">Sacred Loom</div>
+<div class="hidden md:flex items-center gap-12">
+<a class="text-primary font-semibold border-b-2 border-tertiary pb-1 font-headline tracking-tight" href="#">Collections</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-all duration-300 font-headline tracking-tight font-light" href="#">Artisans</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-all duration-300 font-headline tracking-tight font-light" href="#">The Journal</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-all duration-300 font-headline tracking-tight font-light" href="#">Our Story</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="gold-leaf-hover transition-all duration-300 active:opacity-70">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="gold-leaf-hover transition-all duration-300 active:opacity-70">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<section class="px-8 max-w-screen-2xl mx-auto mb-20">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div class="max-w-2xl">
+<span class="label-md uppercase tracking-[0.2em] text-tertiary mb-4 block font-semibold text-xs">Devi Divine: The Autumn Ritual</span>
+<h1 class="text-6xl md:text-8xl font-headline font-semibold tracking-tight leading-none mb-6 text-primary">Woven for the Devi</h1>
+<p class="text-lg text-on-surface-variant font-light max-w-md leading-relaxed">
+                    A celestial dialogue between sacred fibers and earthly form. Each artifact is hand-carved in the spirit of Pushkar to embody the divine feminine.
+                </p>
+</div>
+<div class="flex gap-4">
+<div class="h-12 w-12 rounded-full border border-primary/30 flex items-center justify-center text-primary font-headline font-bold">०१</div>
+<div class="h-[1px] w-24 bg-primary/20 self-center"></div>
+<div class="h-12 w-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-headline font-bold">०८</div>
+</div>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="px-8 max-w-screen-2xl mx-auto mb-16">
+<div class="flex flex-wrap items-center justify-between gap-y-6 py-8 border-y border-primary/10">
+<div class="flex flex-wrap gap-10">
+<!-- Ritual Filter -->
+<div class="group relative">
+<button class="flex items-center gap-2 group-hover:text-primary transition-colors">
+<span class="label-md uppercase tracking-widest text-xs font-semibold text-on-surface">By Ritual</span>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="expand_more">expand_more</span>
+</button>
+<div class="absolute top-full left-0 mt-4 hidden group-hover:block z-40 bg-white p-6 min-w-[200px] rounded-lg shadow-xl border border-primary/5">
+<ul class="space-y-4">
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Meditation</a></li>
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Ceremony</a></li>
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Daily Life</a></li>
+</ul>
+</div>
+</div>
+<!-- Material Filter -->
+<div class="group relative">
+<button class="flex items-center gap-2 group-hover:text-primary transition-colors">
+<span class="label-md uppercase tracking-widest text-xs font-semibold text-on-surface">By Material</span>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="expand_more">expand_more</span>
+</button>
+<div class="absolute top-full left-0 mt-4 hidden group-hover:block z-40 bg-white p-6 min-w-[200px] rounded-lg shadow-xl border border-primary/5">
+<ul class="space-y-4">
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Wild Silk</a></li>
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Hand-Spun Cotton</a></li>
+<li><a class="text-sm hover:text-tertiary transition-colors" href="#">Raw Linen</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="text-sm italic font-headline">१२ Artifacts Observed</span>
+<button class="flex items-center gap-2 hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="flex items-center gap-2 hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="view_agenda">view_agenda</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Product Grid -->
+<section class="px-8 max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
+<!-- Product Card 1 with Arched Motif -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden rounded-t-[100px] bg-surface-container-low mb-6 border border-primary/5 shadow-sm">
+<img alt="Ritual Tunic" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEEl4Hn7g7aWiaTgE0el8ErflemNVMDAY8Rhvr_DTLws_DcxVX4t6Hw4nimW1Hy-R3JhXskT4-fHA277Uy6rYcTl0_VVdTLAaLu7ywJIA45hVqLSdt0jSkXtWdBsVzwBE3kpSu-7T6WhUt5bwuu5BYctb-4JBpM2g7432-dL6NI05ThIvIU_FnIfGEM_ukrEpXbiSaKqpQ0IG4JifZtbuvAsvcor8yZyKxa-xeBssB1tFIZAbaBAtxe7Cd9iEFrloQt1v8siSVLJo"/>
+<div class="absolute top-8 right-8 bg-white/90 backdrop-blur px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity border border-tertiary/20">
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary">Devi New</span>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Ancestral Tunic</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Wild Silk &amp; Vermillion</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$320</span>
+</div>
+</div>
+<!-- Product Card 2 (Asymmetric Offset) with Block Print Border -->
+<div class="group cursor-pointer lg:mt-12">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-surface-container-low mb-6 block-print-border shadow-inner">
+<img alt="Ceremonial Wrap" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmoDZTC-NwyHqFykqEP5X8Xjj5T3g2GmUsxL-lN_g4KPInhuoRvrCh7aQmDhaL5teo-8asYaTapLL8cxN0NSNIZdP6IKy4phJZL9ZD8_9f9-npJSZoC9Hk_FUsha6HEfr9VNK5-OfzrFnnYjS7fVSzuhg7PMHlF6FFCaB7IKiugvndNuwYtcN8X5V4zZOePwolUqWVpNhG6PAZtvI-YPWIBkH9VIGyV1meEwTwyvH18CVJPCq5Ih1WniV-vchefOHqKriS6DPeVHM"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Earthbound Wrap</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Hand-Spun Cotton / Gold</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$280</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-surface-container-low mb-6 shadow-sm">
+<img alt="Meditation Pant" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzVoWe5dEgIPtvZHs5ZjgoUsnqWoUoCv5MWHFMzEujIwIXwGtl8ZdjiN5cPZitE_4-58OzH2-hl2f-3iqj5lwpXw2iNvJX8x1yfyqs74IA34a3JVMB_U7umj8UR2Bs0R90Iu7IgBuok4G3awMT8fG8w3Y38NDN-EcJtXZ9hvsvE81kRR8rCWhmV2-A2U67UfUV4vpOgP_YGHK6xbqbtc2bDXaKZc_7Jgci2Ehzl0_4f4XPWkXwWBvgHVNfl8XPT1l6UoNZD7Sk9Tg"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Stillness Pant</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Raw Linen Ritual Wear</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$245</span>
+</div>
+</div>
+<!-- Product Card 4 with Arched Motif -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden rounded-t-[100px] bg-surface-container-low mb-6 border border-primary/5 shadow-sm">
+<img alt="Ritual Cardigan" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmOTpnYWsW-mzbsrpR4EX1pUXk3EYvjHWwT6w0h7ZVo-daNxag2ZlJfWnv1eVtkTHEiXh0m2oyBn9T5yKk-_IE4U5ShgbMf99ZWFFf8hExA9FIDLoB8mt10Y8gjb3lYo5WDNaULrbQ9hj-BcPURBwkeOAQxmjxUSrS0bkTE1VvDfc5qP-JoUbAQAN4DvHpvO-1Zc89GvcuKazW5jJqrz-JtARszCc5VMZB10qRlFPS41t3wXrT_qJGGuo6IOzyDK3EiOs1IyaiIhY"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Sanctuary Cardigan</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Ethical Wool Temple Knit</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$410</span>
+</div>
+</div>
+<!-- Product Card 5 (Asymmetric Offset) -->
+<div class="group cursor-pointer lg:-mt-12">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-surface-container-low mb-6 block-print-border shadow-inner">
+<img alt="Daily Kimono" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU8QKzC-OtN6trw_-FqM4StxitcJ7cgtZYS87KLALIWx5FVD6WSD7p1JTwslAdR5K-EpKfLsgsOWIBus7UNSe8fzP-0dW1fREM1ih5UxqzmExQ2NgezExAjIOsoHPLG2GChDP9t9IZsOxD8FZJgBuBaK59EgvVx1BFbz3wo-vw2gstS90-zA9zk28oSVzR4PWwrxdHf2NFBr0vx918bT6xsca9obfuBOK4uAX30L6ZCbXu0vnoVpdgDZlxS8mGutCpjznctWb3544"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Flow Kimono</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Mulberry Silk Infusion</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$385</span>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-surface-container-low mb-6 shadow-sm">
+<img alt="Ceremonial Scarf" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1p3uLWxdeI6vZrZ20pCSrFIw-DCcJcEcjIhx2iwViEHksNRXq8LUNZ-rDJtykvuWdwB8CAygjbOwVR-y7Nj9AcNG9lstBnbca1lA3Onev6J4LzI48d0ByNLQ6RYcB2Zxhaci_mb3iGkLGRMPxOtpj-XNJVXN6UOQN3wGD2g3GSNzjWo_HKKJrY1lVtzA2Wxxx03uEJWUekaPAUYkWjx9k77h_d6BjFUXtCeJbMraO4Awc0ei-1S0xIvYS4wI6tnmvThUL0MF76fE"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface mb-1">Vessel Scarf</h3>
+<p class="text-sm text-on-surface-variant font-light tracking-wide italic">Indigo-Dyed Devi Weave</p>
+</div>
+<span class="text-lg font-headline font-bold text-tertiary">$120</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Pagination -->
+<section class="px-8 max-w-screen-2xl mx-auto mt-32 flex flex-col items-center">
+<button class="group flex flex-col items-center gap-4">
+<span class="text-sm uppercase font-headline tracking-[0.3em] font-bold text-primary">Discover More Devi Artifacts</span>
+<span class="material-symbols-outlined text-4xl text-tertiary group-hover:translate-y-2 transition-transform duration-500" data-icon="keyboard_double_arrow_down">keyboard_double_arrow_down</span>
+</button>
+</section>
+</main>
+<!-- Footer Shared Component -->
+<footer class="bg-surface-dim py-16 px-12 w-full border-t border-primary/10">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-screen-2xl mx-auto gap-8">
+<div class="flex flex-col items-center md:items-start text-center md:text-left">
+<div class="text-2xl font-headline font-bold text-primary mb-4">Sacred Loom: Devi Divine</div>
+<p class="text-on-surface-variant text-xs tracking-widest uppercase mb-6 opacity-80">
+                © 2024 Sacred Loom: Pushkar. Sanctified in the Devi Divine Spirit.
+            </p>
+<div class="flex gap-8">
+<span class="material-symbols-outlined text-2xl text-primary hover:text-tertiary transition-colors cursor-pointer" data-icon="language">language</span>
+<span class="material-symbols-outlined text-2xl text-primary hover:text-tertiary transition-colors cursor-pointer" data-icon="spa">spa</span>
+<span class="material-symbols-outlined text-2xl text-primary hover:text-tertiary transition-colors cursor-pointer" data-icon="eco">eco</span>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
+<a class="text-on-surface-variant gold-leaf-hover transition-colors duration-200 text-sm font-body uppercase tracking-wider" href="#">Sustainability</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-colors duration-200 text-sm font-body uppercase tracking-wider" href="#">Shipping</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-colors duration-200 text-sm font-body uppercase tracking-wider" href="#">Ritual Guide</a>
+<a class="text-on-surface-variant gold-leaf-hover transition-colors duration-200 text-sm font-body uppercase tracking-wider" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

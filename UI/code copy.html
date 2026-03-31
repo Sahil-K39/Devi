@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sacred Checkout | Devi Divine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&amp;family=Cinzel:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-container-low": "#faf7f2",
+                "surface-container": "#f4efe6",
+                "surface-bright": "#fffdfa",
+                "primary-fixed-dim": "#e9b08a",
+                "tertiary-fixed": "#d1e8e2",
+                "tertiary": "#2d5a58",
+                "on-primary-fixed-variant": "#5a2d18",
+                "on-secondary-fixed": "#1e1300",
+                "on-primary-container": "#ffffff",
+                "secondary": "#a67c00",
+                "on-background": "#211b18",
+                "surface-container-high": "#ede5d8",
+                "surface": "#fffdfa",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-fixed-variant": "#1a3a38",
+                "primary-fixed": "#f9e0d1",
+                "tertiary-container": "#4a7a78",
+                "secondary-container": "#f7c978",
+                "error-container": "#ffdad6",
+                "primary": "#7a3e26",
+                "on-surface-variant": "#5c4d46",
+                "surface-dim": "#e2d9cc",
+                "secondary-fixed-dim": "#f5c478",
+                "on-error-container": "#93000a",
+                "surface-container-highest": "#e6decb",
+                "on-primary": "#ffffff",
+                "inverse-on-surface": "#f8f0e5",
+                "on-tertiary-container": "#f0ffff",
+                "on-error": "#ffffff",
+                "inverse-primary": "#e9b08a",
+                "on-surface": "#211b18",
+                "surface-tint": "#7a3e26",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-container": "#664b00",
+                "surface-variant": "#e6decb",
+                "background": "#fffdfa",
+                "error": "#ba1a1a",
+                "outline-variant": "#d9c3b8",
+                "on-primary-fixed": "#2b1000",
+                "inverse-surface": "#36302c",
+                "on-secondary-fixed-variant": "#523700",
+                "on-tertiary-fixed": "#00201f",
+                "tertiary-fixed-dim": "#b5d1cb",
+                "secondary-fixed": "#ffdfb1",
+                "primary-container": "#96553d",
+                "outline": "#8a746a",
+                "on-secondary": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Cinzel", "serif"],
+                "body": ["Montserrat", "sans-serif"],
+                "sanskrit": ["Kalam", "cursive"],
+                "label": ["Montserrat", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fffdfa;
+            color: #211b18;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .font-sanskrit { font-family: 'Kalam', cursive; }
+        .temple-shadow { box-shadow: 0 10px 30px rgba(122, 62, 38, 0.05); }
+        .glass-header { background: rgba(255, 253, 250, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(122, 62, 38, 0.1); }
+        .asymmetric-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; }
+        @media (max-width: 1024px) { .asymmetric-grid { grid-template-columns: 1fr; gap: 3rem; } }
+        input::placeholder { font-family: 'Montserrat', sans-serif; opacity: 0.5; font-size: 0.8rem; }
+    </style>
+</head>
+<body class="min-h-screen bg-background selection:bg-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-header">
+<div class="flex justify-between items-center px-10 h-24 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-16">
+<a class="text-3xl font-headline text-primary tracking-widest uppercase" href="#">Devi Divine</a>
+<nav class="hidden lg:flex space-x-10 items-center">
+<a class="text-tertiary hover:text-primary transition-colors duration-300 font-label text-[11px] tracking-[0.3em] uppercase" href="#">The Collection</a>
+<a class="text-tertiary hover:text-primary transition-colors duration-300 font-label text-[11px] tracking-[0.3em] uppercase" href="#">Dharma</a>
+<a class="text-tertiary hover:text-primary transition-colors duration-300 font-label text-[11px] tracking-[0.3em] uppercase" href="#">Sanctuary</a>
+<a class="text-tertiary hover:text-primary transition-colors duration-300 font-label text-[11px] tracking-[0.3em] uppercase" href="#">Ancestry</a>
+</nav>
+</div>
+<div class="flex items-center space-x-8 text-primary">
+<button class="hover:opacity-60 transition-opacity"><span class="material-symbols-outlined !text-xl" data-icon="shopping_bag">shopping_bag</span></button>
+<button class="hover:opacity-60 transition-opacity"><span class="material-symbols-outlined !text-xl" data-icon="account_circle">account_circle</span></button>
+</div>
+</div>
+</header>
+<main class="pt-48 pb-32 px-8 md:px-16 max-w-screen-2xl mx-auto">
+<div class="mb-20">
+<span class="font-sanskrit text-secondary text-xl block mb-2">Namaste</span>
+<h1 class="font-headline text-5xl md:text-6xl text-primary tracking-tight mb-6">Your Sacred Path</h1>
+<p class="font-body text-on-surface-variant max-w-2xl text-lg leading-relaxed font-light">Each offering is consecrated with intention. May these divine artifacts bring harmony and spiritual grace to your dwelling.</p>
+</div>
+<div class="asymmetric-grid">
+<!-- Left Column: Payment & Shipping -->
+<div class="space-y-16">
+<!-- Shipping Details -->
+<section class="border-l border-primary/20 pl-8 md:pl-12">
+<div class="flex items-center gap-6 mb-12">
+<span class="font-sanskrit text-secondary text-3xl">०१</span>
+<h2 class="font-headline text-2xl text-primary tracking-wider uppercase">Destination</h2>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
+<div class="md:col-span-2">
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Soul's Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface placeholder:uppercase" placeholder="Devi Prasad" type="text"/>
+</div>
+<div class="md:col-span-2">
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Dwelling Address</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface placeholder:uppercase" placeholder="Ancient Gate, Temple Road" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Province</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface placeholder:uppercase" placeholder="Varanasi" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Pin Code</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface placeholder:uppercase" placeholder="221001" type="text"/>
+</div>
+</form>
+</section>
+<!-- Payment Details -->
+<section class="border-l border-primary/20 pl-8 md:pl-12">
+<div class="flex items-center gap-6 mb-12">
+<span class="font-sanskrit text-secondary text-3xl">०२</span>
+<h2 class="font-headline text-2xl text-primary tracking-wider uppercase">Exchange</h2>
+</div>
+<div class="space-y-10">
+<div>
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Vessel of Credit</label>
+<div class="relative">
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface" placeholder="XXXX XXXX XXXX XXXX" type="text"/>
+<div class="absolute right-0 bottom-3">
+<span class="material-symbols-outlined text-outline/50" data-icon="credit_card">credit_card</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-10">
+<div>
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Solar Expiry</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface" placeholder="MM/YY" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-label uppercase tracking-[0.25em] text-outline mb-3">Secret Key</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary transition-colors py-3 outline-none font-body text-on-surface" placeholder="•••" type="password"/>
+</div>
+</div>
+</div>
+<div class="mt-20">
+<button class="w-full bg-primary text-on-primary py-6 font-headline tracking-[0.3em] uppercase hover:bg-primary-container transition-all group flex items-center justify-center gap-4">
+                        Conclude Ritual
+                        <span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1" data-icon="shutter_speed">auto_awesome</span>
+</button>
+<p class="text-center text-[9px] text-outline mt-8 uppercase tracking-[0.3em] opacity-60">Sacred Encryption Enabled • Divine Protection Guaranteed</p>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary (Sticky) -->
+<div class="lg:sticky lg:top-40 h-fit">
+<div class="bg-surface-container-low p-12 border border-primary/5 relative">
+<!-- Divine Motif Overlay -->
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined !text-6xl" data-icon="settings_suggest">settings_suggest</span>
+</div>
+<h3 class="font-headline text-xl text-primary mb-12 tracking-widest uppercase">Sacred Manifest</h3>
+<div class="space-y-8 mb-10 border-b border-primary/10 pb-10">
+<!-- Product Item 1 -->
+<div class="flex gap-6">
+<div class="w-24 h-32 bg-surface-container-high grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="Close-up of a hand-woven terracotta colored textile with intricate traditional patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4KZk09JDnE2dq4m-Sa4wQZnNVBeZqo4HLIy-wkfyxdZV-gRJ9bN66VPlqmAX1UVarVYfKS70reQ5mZnsCRlfpsrmmml7kstuGmHQHDwraEvL0fyLOTtZMI5OlgR8QzgtTyj4xMV2nty77I-dMZ6r4THD2g08QmAROxjV1XXK8xbb-hvCOLTSsksqleAcbcibAiAVTaZUVTQPIgO58dpONPNnvhNxcZMIZR45ymWc4tsQdR-HQ2J9-_AA7WGVVvOv2JI7nJtoc1oY"/>
+</div>
+<div class="flex flex-col justify-center gap-1">
+<h4 class="font-headline text-xs tracking-widest text-on-surface uppercase">Aura Loom Silk</h4>
+<p class="text-[10px] font-label text-outline uppercase tracking-wider">Devi Signature Edition</p>
+<span class="font-body text-sm text-primary mt-2">₹ 12,400</span>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="flex gap-6">
+<div class="w-24 h-32 bg-surface-container-high grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="Minimalist brass incense holder resting on a sandstone surface with soft sunlight and shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjqN9l-qQuwF3lECwC03acsXc9LfRjmdnOGCIeomd7aAQhdg030cwmBYBtbM5TYHQFJzZGkk7sJM03OpyVCFJp6eVjRbbUQTuoLiPqFYiiiyO-Kb7NNaSWVR2sxHVnY6bvElvFd7Bg0bBYFDK8-mK-UrjSCD_xMAtyPFkehe6p5Z8WQn-2Vr3M1ndSl8vnAvHk-D9St66s0qPQHwYJ3OqNCr_cO2yC3qrtwP14hAYKPZ3gxWlx9ZaCsK0shH4w4bX-91cxXuuEOXI"/>
+</div>
+<div class="flex flex-col justify-center gap-1">
+<h4 class="font-headline text-xs tracking-widest text-on-surface uppercase">Eternal Flame Vessel</h4>
+<p class="text-[10px] font-label text-outline uppercase tracking-wider">Temple Artisans</p>
+<span class="font-body text-sm text-primary mt-2">₹ 4,200</span>
+</div>
+</div>
+</div>
+<div class="space-y-5">
+<div class="flex justify-between text-[11px] font-label text-outline uppercase tracking-widest">
+<span>Offering Subtotal</span>
+<span>₹ 16,600</span>
+</div>
+<div class="flex justify-between text-[11px] font-label text-secondary uppercase tracking-widest">
+<span>Divine Passage</span>
+<span>Grace of Devi</span>
+</div>
+<div class="flex justify-between text-2xl font-headline text-primary pt-6 border-t border-primary/10">
+<span>Total Sum</span>
+<span>₹ 16,600</span>
+</div>
+</div>
+<div class="mt-12 flex items-start gap-4 bg-primary/5 p-6 border-l-2 border-primary/20">
+<span class="font-sanskrit text-secondary text-2xl">ॐ</span>
+<p class="text-[10px] font-body text-on-surface-variant uppercase tracking-widest leading-loose">
+                        Each parcel is anointed with pure essence and accompanied by a blessing from the Devi Divine sanctuary.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-24 bg-surface-container-high flex flex-col items-center justify-center space-y-10 px-6 border-t border-primary/10">
+<div class="font-headline text-2xl tracking-[0.4em] text-primary uppercase">Devi Divine</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-6">
+<a class="font-label text-[10px] text-tertiary hover:text-primary transition-all uppercase tracking-[0.3em]" href="#">Origin Story</a>
+<a class="font-label text-[10px] text-tertiary hover:text-primary transition-all uppercase tracking-[0.3em]" href="#">Preservation</a>
+<a class="font-label text-[10px] text-tertiary hover:text-primary transition-all uppercase tracking-[0.3em]" href="#">Pilgrimage</a>
+<a class="font-label text-[10px] text-tertiary hover:text-primary transition-all uppercase tracking-[0.3em]" href="#">Privacy Rituals</a>
+</div>
+<div class="pt-10 flex flex-col items-center gap-4">
+<span class="font-sanskrit text-primary text-2xl">शान्तिः शान्तिः शान्तिः</span>
+<p class="font-label text-[9px] text-tertiary/50 uppercase tracking-[0.4em]">© 2024 Devi Divine. Eternal Heritage. Modern Grace.</p>
+</div>
+</footer>
+</body></html>

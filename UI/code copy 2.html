@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#B22222", // Vermillion
+              "primary-container": "#8B0000",
+              "on-primary": "#FFFFFF",
+              "secondary": "#D4AF37", // Gold
+              "secondary-container": "#FFD700",
+              "on-secondary": "#1f1b17",
+              "tertiary": "#815600",
+              "surface": "#F5F5DC", // Parchment
+              "surface-container": "#E3D5B8",
+              "surface-container-low": "#FAF9F6",
+              "on-surface": "#2C1810",
+              "on-surface-variant": "#5D4037",
+              "outline": "#8B7D6B",
+              "outline-variant": "#D2B48C",
+              "accent-vermillion": "#B22222",
+              "accent-gold": "#D4AF37",
+              "accent-parchment": "#F5F5DC"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Be Vietnam Pro", "sans-serif"],
+              "label": ["Be Vietnam Pro", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.4rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+            vertical-align: middle
+        }
+        .font-newsreader {
+            font-family: "Newsreader", serif;
+        }
+        .glass-overlay {
+            backdrop-filter: blur(12px)
+        }
+        /* Enhanced textured background with sacred carving feel */
+        .sacred-carving-texture {
+            background-color: #F5F5DC;
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(139, 125, 107, 0.15) 1px, transparent 0),
+                linear-gradient(45deg, rgba(139, 125, 107, 0.05) 25%, transparent 25%, transparent 75%, rgba(139, 125, 107, 0.05) 75%, rgba(139, 125, 107, 0.05)),
+                linear-gradient(-45deg, rgba(139, 125, 107, 0.05) 25%, transparent 25%, transparent 75%, rgba(139, 125, 107, 0.05) 75%, rgba(139, 125, 107, 0.05));
+            background-size: 40px 40px, 80px 80px, 80px 80px;
+        }
+        .sandstone-base {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAsT_ZtzPqsnqicq_fFphaR8BFUXh1J0IScqA9PcQxgp4Sx55UVMzmLwE_Slru9jso9dLk2x6rV1qGH2yL8VIK0CUU2ycTTQ2xujD2_yNFrwxOLV7-3VtHUNMGDKNkmy2raMh3X0M73rCJkTC13kyKCruXtl8zl10d9mO7kHzunAFzBxKhSel_eKlxA0XNA2I5HB0IKRZT1U5gfnROywcx0iw6ViNNC1pZEpyeWiP0t7VWYo2Zg1Lc3fVvGtZzCrDtOP8ouHJgi5FM);
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary selection:text-on-secondary sacred-carving-texture sandstone-base">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
+<nav class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-3xl font-headline italic tracking-tight text-primary">
+            Devi Divine
+        </div>
+<div class="hidden md:flex items-center space-x-12 font-headline tracking-tight font-light">
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 transition-all duration-300" href="#">Collections</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Artisans</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">The Journal</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Our Story</a>
+</div>
+<div class="flex items-center space-x-6 text-primary">
+<button class="hover:text-primary-container transition-all duration-300 active:opacity-70">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="hover:text-primary-container transition-all duration-300 active:opacity-70">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover brightness-75 sepia-[0.2]" data-alt="Close-up of a hand-woven ivory linen robe in the golden light of Pushkar late afternoon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTSQ8c13lRWy2m9qJvFBiA-2SgmbrOaKR6kA8AVJ9u9gbVo9ZUU5AtQY1Kpq7Gt0DngN2RbRhVjL-5ix15rvwq_1DPlZ8JgKDC94YSCdBpF6Xsf3dtpfolV97LXB5BFA4qDwKtx5T2dAsAmc9lsMn4rvyrNqpkB0e52OnANTHDukUk7RIeUyeRLt2Ze7S0i3jnWOJVOrGIvHns7V0CFCS6cy_s2ZH4SohqxWtLJHUUG-zTiN9DiUkYYL8I07BEL5VSChbFaxeKZ3s"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/20 to-surface"></div>
+</div>
+<div class="relative z-10 text-center px-4">
+<h1 class="font-headline text-7xl md:text-9xl font-extralight italic tracking-tighter text-on-surface mb-8">
+            Devi Divine
+        </h1>
+<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-xl mx-auto mb-12 tracking-widest font-light">
+            Pushkar: An intentional collection of hand-woven garments crafted in the architectural haze.
+        </p>
+<a class="inline-block bg-primary text-on-primary px-10 py-5 rounded-md font-body tracking-widest text-sm uppercase transition-all hover:bg-primary-container shadow-xl hover:shadow-2xl border border-primary-container/20" href="#">
+            Explore the Loom
+        </a>
+</div>
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-80 text-secondary">
+<span class="material-symbols-outlined text-4xl">keyboard_double_arrow_down</span>
+</div>
+</section>
+<!-- The Story Section -->
+<section class="py-32 px-8 bg-surface/50 backdrop-blur-sm relative overflow-hidden">
+<div class="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+<div class="relative group">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl ring-1 ring-outline-variant/20">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 contrast-[1.1] saturate-[1.2]" data-alt="Artisan hands in an Indian courtyard studio weaving silk threads in the warm afternoon sun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2ZdG-dAOnj2_AaRU-MzDhfEWhoSSG1TZmTb92pF-vxlv1A9hcZp7pxIQuNylzrfYEbsFCvCWOqrt5CuRJdixKKoZDZr9P9zScTwkAUUqyrNpVkAxyNLM9BChsi2ZuHT51unQxkLnnoFYXAxBVGZgXi7yLC7O5HWtjiroApRLu_G8g-LQnkCR0o6RTeDInObAweMl4reg1yi6vXWOUOrEsQoghI3ilhpOUqRrD1KqoMO43SUkY0JuFnZKrek4VGPPOltxn572nIbc"/>
+</div>
+<div class="absolute -bottom-10 -right-10 hidden lg:block w-64 aspect-square bg-surface-container p-4 rounded-xl shadow-2xl border border-secondary/20">
+<img class="w-full h-full object-cover rounded-lg" data-alt="Macro detail of raw hand-spun silk showing natural golden marigold irregularities" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8rQ-xOweHEq7Yr7eITe7C4Yl_WxpsauR6D33Sw3dnsEuif0xj_Dm93GEk8mnXrNRsfhf3MyEjRqDP01Bnf9C2RqgIygPWTJp5Vx3kXm-GnV1fahKeaSrEhlJ9grUqsajpQq7kvCA6mvFtt6oYt9N6sjzyFpnm3tKVFIESidFXhw6q7Bxd3SDhZbbO4MRhMTWjEuY4fG5lMDls6Fdvs66dqb8Kb6gMHeumV9uSNzkdLoG5WWTUeC1F6SWVjTmgMsAbIcOTinrg-HM"/>
+</div>
+</div>
+<div class="space-y-8">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-secondary font-bold">Our Heritage</span>
+<h2 class="font-headline text-5xl md:text-6xl font-light italic text-on-surface leading-tight">
+                Sun-Bleached Silence, <br/>Worn in Intention.
+            </h2>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed font-light">
+                Every piece at Devi Divine begins in the stillness of Pushkar. Our artisans translate ancient Rajasthani weaving techniques into silhouettes that breathe. We use organic cotton and peace silk, dyed with marigold and terracotta extracts.
+            </p>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed font-light">
+                It’s a vessel for your daily rituals—from the morning sun salutation to the quiet meditation of the evening bazaar.
+            </p>
+<div class="pt-4">
+<a class="text-primary font-headline italic text-xl border-b-2 border-primary/30 pb-1 hover:border-primary transition-colors" href="#">Read the Artisan Story</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Rituals -->
+<section class="py-32 px-8 bg-surface-container/30 sacred-carving-texture">
+<div class="max-w-screen-2xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+<div class="max-w-lg">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-secondary font-bold">The Seasonal Loom</span>
+<h2 class="font-headline text-5xl md:text-6xl font-light italic text-on-surface mt-4">Featured Rituals</h2>
+</div>
+<a class="font-headline italic text-lg tracking-wide border-b border-secondary pb-2 hover:text-primary hover:border-primary transition-colors text-on-surface" href="#">View All Collections</a>
+</div>
+<div class="grid md:grid-cols-3 gap-12">
+<!-- Piece 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden rounded-xl mb-6 bg-surface shadow-xl group-hover:shadow-2xl transition-all duration-500 ring-1 ring-outline-variant/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Heavy cream-colored linen robe in a sun-drenched architectural space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd12_aj_1lvTzXTHfwDIK5TMSAl-40Cq994T0_LoJAWkBD9F108n7qq23WTJDKbrfzNqthhhCvHenR_X5fHzXcrI-h8DSvjtmopCTCZqg2f5n7zmZ-th_JX72UGEXvnzA_436TskfTLthjsFJtKSfM6Yhg0WBiKpMoEDggYNm_jieYWN5vKSN_y1EPd4yEZwc3zbwPIkRjvK_ZywbvSy20qLtVwCSGEDtOocLzHEQWYJH6IHsWoG_9BhCgY706txWAClXLTCgdwpM"/>
+</div>
+<h3 class="font-headline text-3xl font-light italic mb-2">The Solstice Robe</h3>
+<p class="font-label text-xs text-on-surface-variant tracking-widest uppercase mb-4">Hand-woven Terracotta Linen</p>
+<p class="text-secondary font-headline text-2xl italic">$420</p>
+</div>
+<!-- Piece 2 -->
+<div class="group cursor-pointer md:mt-16">
+<div class="aspect-[3/4] overflow-hidden rounded-xl mb-6 bg-surface shadow-xl group-hover:shadow-2xl transition-all duration-500 ring-1 ring-outline-variant/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Soft sage green tunic against a warm sandstone wall in afternoon light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBx-Ll3jSEgkVhb9c76h4se0Q7RyJV-Ssa1QXDg55gyRp2r7shONiPT-Filmh4b3OO1nBKxuOmRMzZXeQV0MvltoeMdPjH9rzPT7h0oME61wcDuHBfQn0M2Eg5hjaYaDm0aZsrlpGkvQKQJo0gcha0YAzjoL_iBHSlf3fdME0OfeHzVcCUfmB4NP7vVlx1BTEpwkSJOiWD9qjIs8OdLT3B_bbbYjxHGM1S9MKkoDmybqD8k096ydWVsvrgCz4i2LmCsbRXMlxzj8U"/>
+</div>
+<h3 class="font-headline text-3xl font-light italic mb-2">The Morning Prayer Tunic</h3>
+<p class="font-label text-xs text-on-surface-variant tracking-widest uppercase mb-4">Marigold-Dyed Peace Silk</p>
+<p class="text-secondary font-headline text-2xl italic">$285</p>
+</div>
+<!-- Piece 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden rounded-xl mb-6 bg-surface shadow-xl group-hover:shadow-2xl transition-all duration-500 ring-1 ring-outline-variant/10">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Silk scarf showing earthy ochre tones in bright sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0EfWCBIWje-hS6RZXQSSiMI5autWAIsj7TPcwoRr1OiT-lMiuEmLixdVvwRrcKs_uDE4TWPiUF6G_NuWwN7K3X67nN_FyTTRq7_8jr2jK3xEG3CAqeW7y1Ic-fRCX5hZI7KZGNj1IX9VhfyQmH_foneh0nOl0Lqi2InHCN7EuUEemGR0RS3Xn64c80QU212tN3XHe9YlShqhNTbTQEx5XPM94NYx4JK0ub4lX3vnWXUPEBLZzElWbXAs4O5vuDIQL6jRiRfyyXeY"/>
+</div>
+<h3 class="font-headline text-3xl font-light italic mb-2">The Sacred Silk Scarf</h3>
+<p class="font-label text-xs text-on-surface-variant tracking-widest uppercase mb-4">Botanical Dusty Pink Dye</p>
+<p class="text-secondary font-headline text-2xl italic">$165</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-32 px-8 bg-surface border-y border-outline-variant/30">
+<div class="max-w-screen-md mx-auto text-center">
+<span class="material-symbols-outlined text-primary text-5xl mb-8" data-weight="fill">format_quote</span>
+<div class="relative overflow-hidden min-h-[300px] flex items-center justify-center">
+<div class="transition-all duration-700">
+<blockquote class="font-headline text-3xl md:text-4xl font-light italic text-on-surface leading-relaxed mb-10">
+                    "Slipping into the Solstice Robe feels like a return to the warmth of Pushkar. There is a soul to the fabric that I’ve never found elsewhere. It is the heart of my daily ritual."
+                </blockquote>
+<cite class="font-label text-sm uppercase tracking-[0.2em] text-on-surface-variant not-italic font-bold">— Elena R., San Francisco</cite>
+</div>
+</div>
+<div class="flex justify-center space-x-4 mt-12">
+<div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+</section>
+<!-- Craftsmanship Detail (Visual Break) -->
+<section class="h-[716px] w-full relative">
+<img class="w-full h-full object-cover sepia-[0.2] contrast-[1.05]" data-alt="Cinematic wide shot of a weaving studio in Pushkar with dust motes dancing in golden late afternoon shafts of light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvU2dBF8-S_WED6QeNWrG4Hz091TK_rQDenDrVcIAod0v8HZbT6HKdT1boGfk9lJKg_f8v58fK0_o7BMFsSQHxtG7yyVH5r3lsqgrnMxs0zswmKtlC1_kMFDvTD0nAQelaPcNatgMmwDxnEx1VMLZQyYDLxRGj7jqoW0P_yH5qrXAkPkQ4C0peMNvwB197ojVS20QZdbZRR4UwgCFe-YeNSbqNiwv5mK0DE7VCg9tVDLXULuGQyM6vZB5FGPgfOPSFojV9j4KI7uc"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center p-8">
+<div class="p-12 glass-overlay bg-surface/40 rounded-xl max-w-lg text-center border border-white/30 shadow-2xl">
+<h3 class="font-headline italic text-4xl text-on-surface mb-6">Woven for Lifetimes</h3>
+<p class="text-on-surface-variant font-body font-light text-lg">Our pieces are created to age with you, gaining character with every season and every wear. A legacy of architectural haze.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container w-full py-16 px-12 sacred-carving-texture border-t border-outline-variant/30">
+<div class="flex flex-col md:flex-row justify-between items-center w-full gap-12 max-w-screen-2xl mx-auto">
+<div class="flex flex-col items-center md:items-start text-center md:text-left gap-6">
+<div class="text-3xl font-headline italic text-primary">Devi Divine</div>
+<p class="font-body text-sm text-on-surface-variant max-w-xs leading-relaxed">
+                Join our circle for seasonal reflections and first access to new looms.
+            </p>
+<form class="mt-4 flex border-b-2 border-primary/40 pb-2 w-full max-w-xs focus-within:border-primary transition-all">
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm font-body placeholder-on-surface-variant/50" placeholder="Email Address" type="email"/>
+<button class="text-primary transition-transform hover:scale-110" type="submit">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</form>
+</div>
+<div class="flex gap-16 text-sm">
+<div class="flex flex-col gap-4">
+<h4 class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-2">Explore</h4>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Sustainability</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-2">Support</h4>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+<div class="flex flex-col items-center md:items-end gap-2">
+<div class="text-xs text-on-surface-variant/70 italic font-headline">
+                © 2024 Devi Divine. Crafted in the Architectural Haze.
+            </div>
+</div>
+</div>
+</footer>
+</body></html>
